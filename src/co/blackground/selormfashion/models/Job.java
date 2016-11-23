@@ -26,15 +26,18 @@ public class Job {
     private double deposit;
     private boolean done;
     private Type jobType;
-    public Job() {
 
+
+    public Job() {
+        this.id = UUID.randomUUID();
+        persistenceManager = PersistenceManager.getInstance();
+        measures = new HashMap<>();
+        jobType = Type.TOPS;
     }
 
     public Job(Customer customer) {
-        this.id = UUID.randomUUID();
+        this();
         this.customer = customer;
-        persistenceManager = PersistenceManager.getInstance();
-        this.measures = new HashMap<>();
     }
 
     /**
@@ -114,6 +117,11 @@ public class Job {
 
     public HashMap<String, Double> getMeasures() {
         return measures;
+    }
+
+    public double getMeasure(String what) {
+        if (!measures.containsKey(what)) return 0;
+        return measures.get(what);
     }
 
     /**

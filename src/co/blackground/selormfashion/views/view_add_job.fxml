@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="600.0" prefWidth="768.0" stylesheets="@styles/JMetroLightTheme.css"
-            xmlns="http://javafx.com/javafx/8.0.60">
+            xmlns="http://javafx.com/javafx/8.0.60"
+            fx:controller="co.blackground.selormfashion.controllers.NewJobController">
     <children>
         <HBox layoutX="-21.0" layoutY="168.0" prefHeight="600.0" prefWidth="768.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,8 +46,9 @@
                                                 <Font size="13.0"/>
                                             </font>
                                         </Label>
-                                        <TextField GridPane.columnIndex="1"/>
-                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <TextField promptText="John Doe" GridPane.columnIndex="1"/>
+                                        <TextField promptText="021 123 1234" GridPane.columnIndex="1"
+                                                   GridPane.rowIndex="1"/>
                                     </children>
                                 </GridPane>
                                 <Label text="CLOTH TYPE">
@@ -57,9 +58,10 @@
                                 </Label>
                                 <AnchorPane prefHeight="48.0" prefWidth="431.0">
                                     <children>
-                                        <ToggleButton layoutX="170.0" layoutY="12.0" mnemonicParsing="false"
-                                                      text="Top"/>
-                                        <ToggleButton layoutX="227.0" layoutY="12.0" mnemonicParsing="false"
+                                        <ToggleButton fx:id="btnTop" layoutX="170.0" layoutY="12.0"
+                                                      mnemonicParsing="false" onAction="#toggleToTop" text="Top"/>
+                                        <ToggleButton fx:id="btnTrouser" layoutX="227.0" layoutY="12.0"
+                                                      mnemonicParsing="false" onAction="#toggleToTrouser"
                                                       text="Trouser"/>
                                     </children>
                                 </AnchorPane>
@@ -68,6 +70,27 @@
                                         <Font name="System Bold" size="14.0"/>
                                     </font>
                                 </Label>
+                                <GridPane fx:id="gpForm">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0"
+                                                           prefWidth="134.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0"
+                                                           prefWidth="297.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                </GridPane>
+                                <AnchorPane>
+                                    <children>
+                                        <Button layoutX="383.0" layoutY="1.0" mnemonicParsing="false" text="Save"/>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="36.0"/>
+                                    </VBox.margin>
+                                </AnchorPane>
                             </children>
                         </VBox>
                     </children>
