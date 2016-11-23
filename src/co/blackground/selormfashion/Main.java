@@ -27,4 +27,9 @@ public class Main extends Application {
     public Stage getPrimaryStage() {
         return mainStage;
     }
+
+    public void close() {
+        mainStage.close();
+        System.exit(0);
+    }
 }

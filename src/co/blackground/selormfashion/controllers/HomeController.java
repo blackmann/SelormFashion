@@ -8,18 +8,17 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * This class is responsible for managing the view of home
@@ -53,6 +52,12 @@ public class HomeController {
     private VBox vbJobs;
 
     @FXML
+    private GridPane gpMeasurements;
+
+    @FXML
+    private Label lblCustomerMobile;
+
+    @FXML
     private Label lblCustomerName;
 
     @FXML
@@ -66,11 +71,31 @@ public class HomeController {
 
     @FXML
     private void initialize() throws Exception {
+        ToggleGroup filterBtnGroup = new ToggleGroup();
+        btnAll.setToggleGroup(filterBtnGroup);
+        btnToday.setToggleGroup(filterBtnGroup);
+        btnNotDone.setToggleGroup(filterBtnGroup);
         setUp();
     }
 
     private void setDetails(Job job) {
+        gpMeasurements.getChildren().clear();
         lblCustomerName.setText(job.getCustomer().getName());
+        int column = 0;
+        int row = 0;
+        for (Map.Entry<String, Double> entry : job.getMeasures().entrySet()) {
+            VBox vbMeasureItem = new VBox(4.0);
+            Label lblTitle = new Label(entry.getKey());
+            Label lblValue = new Label(Double.toString(entry.getValue()));
+
+            vbMeasureItem.getChildren().addAll(lblTitle, lblValue);
+
+            gpMeasurements.add(vbMeasureItem, column++, row);
+            if (column == 4) {
+                column = 0;
+                row++;
+            }
+        }
     }
 
     private void loadJobs() throws IOException {
@@ -113,6 +138,7 @@ public class HomeController {
             @Override
             protected void succeeded() {
                 jobs = PersistenceManager.getInstance().getAllJobs();
+                System.out.println(jobs.size());
                 try {
                     loadJobs();
                 } catch (IOException e) {

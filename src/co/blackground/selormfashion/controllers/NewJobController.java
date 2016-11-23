@@ -1,8 +1,11 @@
 package co.blackground.selormfashion.controllers;
 
 import co.blackground.selormfashion.extras.FormField;
+import co.blackground.selormfashion.models.Customer;
 import co.blackground.selormfashion.models.Job;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -123,6 +126,27 @@ public class NewJobController {
     }
 
     /**
+     * Collects form data and creates a job to persistence
+     */
+    @FXML
+    private void saveJob() {
+        Customer customer = activeJob.getCustomer();
+        customer.setMobile(tfCustomerMobile.getText());
+        customer.setName(tfCustomerName.getText());
+
+        ObservableList<Node> formNodes = gpForm.getChildren();
+        int i = 0;
+        int currentPosition = 0;
+        while (i < formNodes.size()) {
+            i++;
+            TextField tfField = (TextField) formNodes.get(i++);
+            activeJob.addMeasure(formFields.get(currentPosition++).getName(), toDouble(tfField.getText()));
+        }
+
+        activeJob.save();
+    }
+
+    /**
      * Returns the value of a job measure field
      *
      * @param field which field to request/get
@@ -135,5 +159,9 @@ public class NewJobController {
     private String string(double val) {
         if (val == 0) return null;
         return Double.toString(val);
+    }
+
+    private Double toDouble(String s) {
+        return Double.valueOf(s);
     }
 }

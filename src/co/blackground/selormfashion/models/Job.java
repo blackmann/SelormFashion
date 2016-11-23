@@ -33,6 +33,7 @@ public class Job {
         persistenceManager = PersistenceManager.getInstance();
         measures = new HashMap<>();
         jobType = Type.TOPS;
+        customer = new Customer();
     }
 
     public Job(Customer customer) {

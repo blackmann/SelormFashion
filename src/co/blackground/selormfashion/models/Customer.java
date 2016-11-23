@@ -20,22 +20,31 @@ public class Customer {
     private UUID id;
 
     public Customer() {
+        id = UUID.randomUUID();
     }
 
     public Customer(String name) {
-        id = UUID.randomUUID();
+        this();
         this.name = name;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public String getMobile() {
         return mobile;
     }
 
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
