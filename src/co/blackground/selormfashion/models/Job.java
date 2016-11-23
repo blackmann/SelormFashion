@@ -2,11 +2,9 @@ package co.blackground.selormfashion.models;
 
 import co.blackground.selormfashion.managers.PersistenceManager;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -17,28 +15,26 @@ import java.util.UUID;
 public class Job {
 
     private transient PersistenceManager persistenceManager;
-
     @XmlAttribute(name = "id")
     private UUID id;
+    @XmlElementWrapper(name = "measures")
+    private HashMap<String, Double> measures;
     private Customer customer;
-
-    private Measurement measurement;
-
     private Date dateReceived;
-
+    private Date dateArrived;
     private double jobCost;
     private double deposit;
     private boolean done;
-
+    private Type jobType;
     public Job() {
 
     }
 
-    public Job(Customer customer, Measurement measurement) {
+    public Job(Customer customer) {
+        this.id = UUID.randomUUID();
         this.customer = customer;
-        this.measurement = measurement;
         persistenceManager = PersistenceManager.getInstance();
-        id = UUID.randomUUID();
+        this.measures = new HashMap<>();
     }
 
     /**
@@ -52,27 +48,86 @@ public class Job {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
 
-    public Measurement getMeasurement() {
-        return measurement;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Date getDateReceived() {
         return dateReceived;
     }
 
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
+    }
+
     public double getJobCost() {
         return jobCost;
+    }
+
+    public void setJobCost(double jobCost) {
+        this.jobCost = jobCost;
     }
 
     public double getDeposit() {
         return deposit;
     }
 
+    public void setDeposit(double deposit) {
+        this.deposit = deposit;
+    }
+
     public boolean isDone() {
         return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public Date getDateArrived() {
+        return dateArrived;
+    }
+
+    public void setDateArrived(Date dateArrived) {
+        this.dateArrived = dateArrived;
+    }
+
+    public Type getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(Type jobType) {
+        this.jobType = jobType;
+    }
+
+    public void addMeasure(String what, double value) {
+        measures.put(what, value);
+    }
+
+    public HashMap<String, Double> getMeasures() {
+        return measures;
+    }
+
+    /**
+     * Specifies if the job is meant to be a top (shirt, coat, etc)
+     * or a pant (trouser)
+     */
+    public enum Type {
+        TOPS, TROUSER
+    }
+
+    /**
+     * Helps in search filters
+     */
+    public enum Filter {
+        ALL, TODAY, NOT_DONE, DONE
     }
 }

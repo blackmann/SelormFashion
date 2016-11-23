@@ -27,9 +27,13 @@ public class PersistenceManager {
 
     }
 
+    /**
+     * Initializes the persistence manager to load saved jobs
+     */
     public static void init() {
         instance = new PersistenceManager();
         file = new File(Constants.DATA_FILE);
+
         loadSavedJobs();
     }
 
@@ -39,6 +43,21 @@ public class PersistenceManager {
         }
 
         return instance;
+    }
+
+    /**
+     * Fetches all jobs from the file
+     */
+    private static void loadSavedJobs() {
+        jobs = new ArrayList<>();
+        try {
+            JAXBContext context = JAXBContext.newInstance(PersistenceManager.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            PersistenceManager p = (PersistenceManager) unmarshaller.unmarshal(file);
+            jobs.addAll(p.getAllJobs());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -67,22 +86,8 @@ public class PersistenceManager {
     }
 
     /**
-     * Fetches all jobs from the file
-     */
-    private static void loadSavedJobs() {
-        jobs = new ArrayList<>();
-        try {
-            JAXBContext context = JAXBContext.newInstance(PersistenceManager.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            PersistenceManager p = (PersistenceManager) unmarshaller.unmarshal(file);
-            jobs.addAll(p.getAllJobs());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Retrieves all jobs saved to the persistence
+     *
      * @return returns an ArrayList
      */
     @XmlElement(name = "job")
