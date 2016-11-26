@@ -1,59 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jobs>
-    <job id="485a0a16-42b8-4de0-a6b4-83ba3d304c3d">
+    <job id="8a2e1777-470b-4ad9-8823-eb74b5c12438">
         <measures>
             <entry>
                 <key>sleeve_bass</key>
-                <value>4.0</value>
+                <value>32.0</value>
             </entry>
             <entry>
                 <key>length</key>
-                <value>4.0</value>
+                <value>36.0</value>
             </entry>
             <entry>
                 <key>back</key>
-                <value>4.0</value>
+                <value>35.0</value>
             </entry>
             <entry>
                 <key>sleeve_length</key>
-                <value>4.0</value>
+                <value>39.0</value>
             </entry>
         </measures>
-        <customer id="a1a42377-8d12-4683-95d6-a388cbe83c01">
-            <name>Fredica</name>
-            <mobile>55555</mobile>
+        <customer id="6f727078-518c-4b17-8351-65c4da08a61a">
+            <name>Prince Obeng</name>
+            <mobile>02444444</mobile>
         </customer>
+        <userPhoto>photos\DSC_1318.JPG</userPhoto>
         <jobCost>0.0</jobCost>
         <deposit>0.0</deposit>
         <done>false</done>
         <jobType>TOPS</jobType>
     </job>
-    <job id="40411679-e15c-4aea-a038-2896523131d6">
+    <job id="e5159ad6-65e5-4507-b42f-8a7fd3ca1608">
         <measures>
             <entry>
-                <key>sleeve_bass</key>
-                <value>9.0</value>
+                <key>thighs</key>
+                <value>34.0</value>
+            </entry>
+            <entry>
+                <key>bass</key>
+                <value>25.0</value>
+            </entry>
+            <entry>
+                <key>hips</key>
+                <value>27.0</value>
             </entry>
             <entry>
                 <key>length</key>
-                <value>9.0</value>
+                <value>26.0</value>
             </entry>
             <entry>
-                <key>back</key>
-                <value>9.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
-                <value>9.0</value>
+                <key>waist</key>
+                <value>15.0</value>
             </entry>
         </measures>
-        <customer id="613ce2f9-7c05-4032-8460-826a6b6dd93d">
-            <name>Somethi</name>
-            <mobile>12233</mobile>
+        <customer id="0a4c9fbe-d705-4fbd-86d1-1784a6dedc51">
+            <name>Corn Flakes</name>
+            <mobile>1234567890</mobile>
         </customer>
+        <userStyle>styles\airtel-money.jpg</userStyle>
+        <userPhoto>photos\1412793116240251.jpg</userPhoto>
         <jobCost>0.0</jobCost>
         <deposit>0.0</deposit>
         <done>false</done>
-        <jobType>TOPS</jobType>
+        <jobType>TROUSER</jobType>
     </job>
 </jobs>

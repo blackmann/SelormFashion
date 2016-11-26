@@ -9,13 +9,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,6 +34,8 @@ public class HomeController {
     private ArrayList<Job> jobs;
     private ArrayList<Job.Filter> filters;
     private String searchKeyword;
+
+    private Stage newJobStage;
 
     @FXML
     private DatePicker dpFilterDatePicker;
@@ -69,8 +76,11 @@ public class HomeController {
     @FXML
     private ImageView ivStyle;
 
+    /**
+     * Called right after declaring controller
+     */
     @FXML
-    private void initialize() throws Exception {
+    private void initialize() {
         ToggleGroup filterBtnGroup = new ToggleGroup();
         btnAll.setToggleGroup(filterBtnGroup);
         btnToday.setToggleGroup(filterBtnGroup);
@@ -78,15 +88,24 @@ public class HomeController {
         setUp();
     }
 
+    /**
+     * Displays the details of a job
+     *
+     * @param job the job to be viewed
+     */
     private void setDetails(Job job) {
         gpMeasurements.getChildren().clear();
         lblCustomerName.setText(job.getCustomer().getName());
+        lblCustomerMobile.setText(job.getCustomer().getMobile());
         int column = 0;
         int row = 0;
         for (Map.Entry<String, Double> entry : job.getMeasures().entrySet()) {
             VBox vbMeasureItem = new VBox(4.0);
-            Label lblTitle = new Label(entry.getKey());
+            Label lblTitle = new Label(Utils.toTitle(entry.getKey()));
+            lblTitle.setFont(new Font(13));
+
             Label lblValue = new Label(Double.toString(entry.getValue()));
+            lblValue.setFont(new Font(24));
 
             vbMeasureItem.getChildren().addAll(lblTitle, lblValue);
 
@@ -96,8 +115,48 @@ public class HomeController {
                 row++;
             }
         }
+
+        if (validPhoto(job.getUserPhoto())) {
+            setImage(ivCustomerPhoto, job.getUserPhoto());
+        } else {
+            ivCustomerPhoto.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+        }
+
+        if (validPhoto(job.getUserStyle())) {
+            setImage(ivStyle, job.getUserStyle());
+        } else {
+            ivStyle.setImage(new Image(getClass().getResource("../views/resources/default-placeholder.png").toString()));
+        }
     }
 
+    /**
+     * Checks if @param photo is valid to be set
+     *
+     * @param photo the photo to validate
+     * @return true if photo is valid else false
+     */
+    private boolean validPhoto(String photo) {
+        return photo != null && !photo.isEmpty();
+    }
+
+    /**
+     * Set the @param photo into @param iv
+     *
+     * @param iv    the ImageView to
+     * @param photo photo to be set
+     */
+    private void setImage(ImageView iv, String photo) {
+        try {
+            iv.setImage(new Image(new FileInputStream(new File(photo))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads saved jobs into list
+     * @throws IOException if file read fails when loading list items fxml
+     */
     private void loadJobs() throws IOException {
         // remove all children
         vbJobs.getChildren().clear();
@@ -105,22 +164,35 @@ public class HomeController {
         for (Job j : jobs) {
             AnchorPane apJobItem = FXMLLoader.load(getClass().getResource("../views/view_job_item.fxml"));
             apJobItem.setOnMouseClicked((event) -> setDetails(j));
+            Label lblCustomerName = (Label) apJobItem.lookup("#customerName");
+            lblCustomerName.setText(j.getCustomer().getName());
+
+            ImageView ivCustomerPhoto = (ImageView) apJobItem.lookup("#customerPhoto");
+            if (validPhoto(j.getUserPhoto())) {
+                setImage(ivCustomerPhoto, j.getUserPhoto());
+            } else {
+                ivCustomerPhoto.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+            }
+
             vbJobs.getChildren().add(apJobItem);
         }
     }
 
     @FXML
     private void showAddNew() throws IOException {
-        AnchorPane apNewJob = FXMLLoader.load(getClass().getResource("../views/view_add_job.fxml"));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(apNewJob));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/view_add_job.fxml"));
+        AnchorPane apNewJob = loader.load();
+        NewJobController controller = loader.getController();
+        controller.setHomeController(this);
+        newJobStage = new Stage();
+        newJobStage.setScene(new Scene(apNewJob));
 
         Main mainApp = Utils.getMainApp();
         Stage primaryStage = mainApp.getPrimaryStage();
-        stage.initOwner(primaryStage.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
+        newJobStage.initOwner(primaryStage);
+        newJobStage.initModality(Modality.WINDOW_MODAL);
 
-        stage.show();
+        newJobStage.show();
     }
 
     /**
@@ -149,5 +221,18 @@ public class HomeController {
 
         Thread getJobsThread = new Thread(getJobs);
         getJobsThread.start();
+    }
+
+    /**
+     * Reloads list when new job has been added
+     */
+    void savedNew() {
+        newJobStage.close();
+        jobs = PersistenceManager.getInstance().getAllJobs();
+        try {
+            loadJobs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

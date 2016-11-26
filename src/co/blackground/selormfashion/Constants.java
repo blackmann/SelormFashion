@@ -6,6 +6,8 @@ package co.blackground.selormfashion;
 
 public class Constants {
 
-    public static final String APP_NAME = "Selorm Fashion";
     public static final String DATA_FILE = "jobs_file.xml";
+    public static final String PHOTOS_DIR = "photos/";
+    public static final String STYLES_DIR = "styles/";
+    static final String APP_NAME = "Selorm Fashion";
 }

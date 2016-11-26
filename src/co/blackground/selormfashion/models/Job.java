@@ -22,10 +22,12 @@ public class Job {
     private Customer customer;
     private Date dateReceived;
     private Date dateArrived;
+    private String userStyle;
+    private String userPhoto;
     private double jobCost;
     private double deposit;
     private boolean done;
-    private Type jobType;
+    private String jobType;
 
 
     public Job() {
@@ -104,11 +106,11 @@ public class Job {
         this.dateArrived = dateArrived;
     }
 
-    public Type getJobType() {
+    public String getJobType() {
         return jobType;
     }
 
-    public void setJobType(Type jobType) {
+    public void setJobType(String jobType) {
         this.jobType = jobType;
     }
 
@@ -125,18 +127,35 @@ public class Job {
         return measures.get(what);
     }
 
-    /**
-     * Specifies if the job is meant to be a top (shirt, coat, etc)
-     * or a pant (trouser)
-     */
-    public enum Type {
-        TOPS, TROUSER
+    public String getUserStyle() {
+        return userStyle;
+    }
+
+    public void setUserStyle(String userStyle) {
+        this.userStyle = userStyle;
+    }
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
     }
 
     /**
      * Helps in search filters
      */
     public enum Filter {
-        ALL, TODAY, NOT_DONE, DONE
+        ALL, TODAY, NOT_DONE, DONE, TOPS, TROUSERS
+    }
+
+    /**
+     * Specifies if the job is meant to be a top (shirt, coat, etc)
+     * or a pant (trouser)
+     */
+    public class Type {
+        public static final String TOPS = "TOPS";
+        public static final String TROUSER = "TROUSER";
     }
 }

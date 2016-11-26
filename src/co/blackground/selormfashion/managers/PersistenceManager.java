@@ -53,7 +53,7 @@ public class PersistenceManager {
         try {
             JAXBContext context = JAXBContext.newInstance(PersistenceManager.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            PersistenceManager p = (PersistenceManager) unmarshaller.unmarshal(file);
+            unmarshaller.unmarshal(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
