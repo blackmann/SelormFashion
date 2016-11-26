@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="selormfashion" default="all">
+
+
+    <property file="build.properties"/>
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+    <property name="skip.tests" value="true"/>
+     -->
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="700m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/*.rbc/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/__pycache__/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/vssver.scc/**"/>
+        <exclude name="**/vssver2.scc/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.war"/>
+        <include name="*.swc"/>
+        <include name="*.apk"/>
+        <include name="*.zip"/>
+        <include name="*.ear"/>
+        <include name="*.egg"/>
+        <include name="*.ane"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <exclude name="**/?*.java"/>
+        <exclude name="**/?*.form"/>
+        <exclude name="**/?*.class"/>
+        <exclude name="**/?*.groovy"/>
+        <exclude name="**/?*.scala"/>
+        <exclude name="**/?*.flex"/>
+        <exclude name="**/?*.kt"/>
+        <exclude name="**/?*.clj"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+    <path id="jdk.classpath.1.8">
+        <fileset dir="${jdk.home.1.8}">
+            <include name="jre/lib/charsets.jar"/>
+            <include name="jre/lib/deploy.jar"/>
+            <include name="jre/lib/javaws.jar"/>
+            <include name="jre/lib/jce.jar"/>
+            <include name="jre/lib/jfr.jar"/>
+            <include name="jre/lib/jfxswt.jar"/>
+            <include name="jre/lib/jsse.jar"/>
+            <include name="jre/lib/management-agent.jar"/>
+            <include name="jre/lib/plugin.jar"/>
+            <include name="jre/lib/resources.jar"/>
+            <include name="jre/lib/rt.jar"/>
+            <include name="jre/lib/ext/access-bridge-64.jar"/>
+            <include name="jre/lib/ext/cldrdata.jar"/>
+            <include name="jre/lib/ext/dnsns.jar"/>
+            <include name="jre/lib/ext/jaccess.jar"/>
+            <include name="jre/lib/ext/jfxrt.jar"/>
+            <include name="jre/lib/ext/localedata.jar"/>
+            <include name="jre/lib/ext/nashorn.jar"/>
+            <include name="jre/lib/ext/sunec.jar"/>
+            <include name="jre/lib/ext/sunjce_provider.jar"/>
+            <include name="jre/lib/ext/sunmscapi.jar"/>
+            <include name="jre/lib/ext/sunpkcs11.jar"/>
+            <include name="jre/lib/ext/zipfs.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+    <!-- Register Custom Compiler Taskdefs -->
+    <property name="javac2.home" value="${idea.home}/lib"/>
+    <path id="javac2.classpath">
+        <pathelement location="${javac2.home}/javac2.jar"/>
+        <pathelement location="${javac2.home}/jdom.jar"/>
+        <pathelement location="${javac2.home}/asm-all.jar"/>
+        <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+    </path>
+    <target name="register.custom.compilers">
+        <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+        <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions"
+                 classpathref="javac2.classpath"/>
+    </target>
+
+    <!-- Modules -->
+
+
+    <!-- Module SelormFashion -->
+
+    <dirname property="module.selormfashion.basedir" file="${ant.file}"/>
+
+
+    <property name="module.jdk.home.selormfashion" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.selormfashion" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.selormfashion" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.selormfashion" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+
+    <property name="selormfashion.output.dir" value="${module.selormfashion.basedir}/out/production/SelormFashion"/>
+    <property name="selormfashion.testoutput.dir" value="${module.selormfashion.basedir}/out/test/SelormFashion"/>
+
+    <path id="selormfashion.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="selormfashion.module.production.classpath">
+        <path refid="${module.jdk.classpath.selormfashion}"/>
+        <pathelement location="${basedir}/libs/commons-io-2.5.jar"/>
+    </path>
+
+    <path id="selormfashion.runtime.production.module.classpath">
+        <pathelement location="${selormfashion.output.dir}"/>
+        <pathelement location="${basedir}/libs/commons-io-2.5.jar"/>
+    </path>
+
+    <path id="selormfashion.module.classpath">
+        <path refid="${module.jdk.classpath.selormfashion}"/>
+        <pathelement location="${selormfashion.output.dir}"/>
+        <pathelement location="${basedir}/libs/commons-io-2.5.jar"/>
+    </path>
+
+    <path id="selormfashion.runtime.module.classpath">
+        <pathelement location="${selormfashion.testoutput.dir}"/>
+        <pathelement location="${selormfashion.output.dir}"/>
+        <pathelement location="${basedir}/libs/commons-io-2.5.jar"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.selormfashion">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.selormfashion">
+        <patternset refid="excluded.from.module.selormfashion"/>
+    </patternset>
+
+    <path id="selormfashion.module.sourcepath">
+        <dirset dir="${module.selormfashion.basedir}">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.selormfashion"
+            depends="compile.module.selormfashion.production,compile.module.selormfashion.tests"
+            description="Compile module SelormFashion"/>
+
+    <target name="compile.module.selormfashion.production" depends="register.custom.compilers"
+            description="Compile module SelormFashion; production classes">
+        <mkdir dir="${selormfashion.output.dir}"/>
+        <javac2 destdir="${selormfashion.output.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.selormfashion}/javac">
+            <compilerarg line="${compiler.args.selormfashion}"/>
+            <bootclasspath refid="selormfashion.module.bootclasspath"/>
+            <classpath refid="selormfashion.module.production.classpath"/>
+            <src refid="selormfashion.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.selormfashion"/>
+        </javac2>
+
+        <copy todir="${selormfashion.output.dir}">
+            <fileset dir="${module.selormfashion.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.selormfashion.tests"
+            depends="register.custom.compilers,compile.module.selormfashion.production"
+            description="compile module SelormFashion; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.selormfashion" description="cleanup module">
+        <delete dir="${selormfashion.output.dir}"/>
+        <delete dir="${selormfashion.testoutput.dir}"/>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="build.modules" depends="init, compile.module.selormfashion" description="build all modules"/>
+
+    <target name="init.artifacts">
+        <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+        <property name="artifact.output.selormfashion" value="${basedir}/out/artifacts/SelormFashion"/>
+        <mkdir dir="${artifacts.temp.dir}"/>
+        <property name="artifact.temp.output.SelormFashion" value="${artifacts.temp.dir}/SelormFashion.jar"/>
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant"
+                 classpath="${jdk.home.1.8}/lib/ant-javafx.jar"/>
+    </target>
+
+    <target xmlns:fx="javafx:com.sun.javafx.tools.ant" name="artifact.selormfashion"
+            depends="init.artifacts, compile.module.selormfashion" description="Build &#39;SelormFashion&#39; artifact">
+        <mkdir dir="${artifact.output.selormfashion}"/>
+        <copy todir="${artifact.temp.output.SelormFashion}">
+            <fileset dir="${selormfashion.output.dir}"/>
+        </copy>
+        <copy file="${basedir}/libs/commons-io-2.5.jar"
+              tofile="${artifact.temp.output.SelormFashion}/commons-io-2.5.jar"/>
+        <fx:fileset id="all_but_SelormFashion" dir="${artifact.temp.output.SelormFashion}" includes="**/*.jar">
+            <exclude name="SelormFashion.jar"/>
+        </fx:fileset>
+        <fx:fileset id="all_SelormFashion" dir="${artifact.temp.output.SelormFashion}" includes="**/*.jar"/>
+        <fx:application id="SelormFashion_id" name="SelormFashion" mainClass="co.blackground.selormfashion.Main"
+                        version="1"/>
+        <fx:csstobin outdir="${artifact.temp.output.SelormFashion}">
+            <fileset dir="${artifact.temp.output.SelormFashion}" includes="**/*.css"/>
+        </fx:csstobin>
+        <fx:jar destfile="${artifact.temp.output.SelormFashion}/SelormFashion.jar">
+            <fx:application refid="SelormFashion_id"/>
+            <fileset dir="${artifact.temp.output.SelormFashion}" excludes="**/*.jar"/>
+            <fx:resources>
+                <fx:fileset refid="all_but_SelormFashion"/>
+            </fx:resources>
+            <manifest/>
+        </fx:jar>
+        <fx:deploy width="1024" height="600" updatemode="background"
+                   outdir="${artifact.temp.output.SelormFashion}/deploy" outfile="SelormFashion" nativeBundles="all">
+            <fx:permissions elevated="true"/>
+            <fx:application refid="SelormFashion_id"/>
+            <fx:info title="Selorm Fashion" vendor="Blackground Labs"
+                     description="This program is used to take records of jobs"/>
+            <fx:resources>
+                <fx:fileset refid="all_SelormFashion"/>
+            </fx:resources>
+        </fx:deploy>
+        <property name="artifact.sign.vendor.SelormFashion" value="CN=Blackground Labs"/>
+        <property name="artifact.sign.alias.SelormFashion" value="jb"/>
+        <property name="artifact.sign.keystore.SelormFashion" value="${artifact.temp.output.SelormFashion}\jb-key.jks"/>
+        <property name="artifact.sign.storepass.SelormFashion" value="storepass"/>
+        <property name="artifact.sign.keypass.SelormFashion" value="keypass"/>
+        <genkey dname="${artifact.sign.vendor.SelormFashion}" alias="${artifact.sign.alias.SelormFashion}"
+                keystore="${artifact.sign.keystore.SelormFashion}" storepass="${artifact.sign.storepass.SelormFashion}"
+                keypass="${artifact.sign.keypass.SelormFashion}"/>
+        <signjar alias="${artifact.sign.alias.SelormFashion}" keystore="${artifact.sign.keystore.SelormFashion}"
+                 storepass="${artifact.sign.storepass.SelormFashion}" keypass="${artifact.sign.keypass.SelormFashion}">
+            <fileset dir="${artifact.temp.output.SelormFashion}/deploy">
+                <include name="*.jar"/>
+            </fileset>
+        </signjar>
+        <copy todir="${artifact.output.selormfashion}">
+            <fileset dir="${artifact.temp.output.SelormFashion}/deploy"/>
+        </copy>
+        <delete includeemptydirs="true">
+            <fileset dir="${artifact.temp.output.SelormFashion}"/>
+        </delete>
+    </target>
+
+    <target name="build.all.artifacts" depends="artifact.selormfashion" description="Build all artifacts">
+
+        <!-- Delete temporary files -->
+        <delete dir="${artifacts.temp.dir}"/>
+    </target>
+
+    <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
