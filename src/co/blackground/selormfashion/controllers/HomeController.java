@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
+
 /**
  * This class is responsible for managing the view of home
  * page, as well its interaction.
@@ -119,13 +121,13 @@ public class HomeController {
         if (validPhoto(job.getUserPhoto())) {
             setImage(ivCustomerPhoto, job.getUserPhoto());
         } else {
-            ivCustomerPhoto.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+            ivCustomerPhoto.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
         }
 
         if (validPhoto(job.getUserStyle())) {
             setImage(ivStyle, job.getUserStyle());
         } else {
-            ivStyle.setImage(new Image(getClass().getResource("../views/resources/default-placeholder.png").toString()));
+            ivStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
         }
     }
 
@@ -162,7 +164,7 @@ public class HomeController {
         vbJobs.getChildren().clear();
 
         for (Job j : jobs) {
-            AnchorPane apJobItem = FXMLLoader.load(getClass().getResource("../views/view_job_item.fxml"));
+            AnchorPane apJobItem = FXMLLoader.load(getClass().getResource(PACKAGE_DIR + "views/view_job_item.fxml"));
             apJobItem.setOnMouseClicked((event) -> setDetails(j));
             Label lblCustomerName = (Label) apJobItem.lookup("#customerName");
             lblCustomerName.setText(j.getCustomer().getName());
@@ -171,7 +173,7 @@ public class HomeController {
             if (validPhoto(j.getUserPhoto())) {
                 setImage(ivCustomerPhoto, j.getUserPhoto());
             } else {
-                ivCustomerPhoto.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+                ivCustomerPhoto.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
             }
 
             vbJobs.getChildren().add(apJobItem);
@@ -180,7 +182,7 @@ public class HomeController {
 
     @FXML
     private void showAddNew() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/view_add_job.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(PACKAGE_DIR + "views/view_add_job.fxml"));
         AnchorPane apNewJob = loader.load();
         NewJobController controller = loader.getController();
         controller.setHomeController(this);

@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
 import static co.blackground.selormfashion.models.Job.Type.TOPS;
 import static co.blackground.selormfashion.models.Job.Type.TROUSER;
 
@@ -68,8 +69,8 @@ public class NewJobController {
         btnTop.setToggleGroup(tgJobType);
         btnTrouser.setToggleGroup(tgJobType);
 
-        imgStyle.setImage(new Image(getClass().getResource("../views/resources/default-placeholder.png").toString()));
-        imgUser.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+        imgStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
+        imgUser.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
         // TOP is the default type
         toggleToTop();
     }
@@ -217,7 +218,7 @@ public class NewJobController {
     @FXML
     private void clearUserPhoto() {
         userPhoto = null;
-        imgUser.setImage(new Image(getClass().getResource("../views/resources/nobody_m.jpg").toString()));
+        imgUser.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
     }
 
     /**
@@ -226,7 +227,7 @@ public class NewJobController {
     @FXML
     private void clearUserStyle() {
         userStyle = null;
-        imgStyle.setImage(new Image(getClass().getResource("../views/resources/default-placeholder.png").toString()));
+        imgStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
     }
 
     /**
