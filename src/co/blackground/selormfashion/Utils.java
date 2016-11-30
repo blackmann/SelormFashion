@@ -1,7 +1,10 @@
 package co.blackground.selormfashion;
 
+import javafx.scene.control.TextField;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 public class Utils {
 
@@ -58,5 +61,29 @@ public class Utils {
         if (!stylesDir.exists()) {
             stylesDir.mkdir();
         }
+    }
+
+    /**
+     * Makes a TextField accept only numbers
+     * @param tf the text field to apply this property
+     */
+    public static void acceptNumberOnly(TextField tf) {
+        tf.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+            if (!newValue.matches("\\.?\\d*")) {
+                tf.setText(newValue.replaceAll("[^\\d\\.]", ""));
+            }
+            // ensures there's only a single point
+            if (!newValue.matches("\\d*\\.?\\d*")) {
+                tf.setText(oldValue);
+            }
+        });
+    }
+
+    public static String formatDate(Date date) {
+        if (date == null) return "";
+        return date.toString();
     }
 }

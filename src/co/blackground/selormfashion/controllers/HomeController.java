@@ -5,6 +5,8 @@ import co.blackground.selormfashion.Utils;
 import co.blackground.selormfashion.managers.PersistenceManager;
 import co.blackground.selormfashion.models.Job;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,6 +36,8 @@ import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
  * page, as well its interaction.
  */
 public class HomeController {
+
+    private static final int DONE_COLOR = 1;
 
     private ArrayList<Job> jobs;
     private ArrayList<Job.Filter> filters;
@@ -70,13 +76,16 @@ public class HomeController {
     private Label lblCustomerName;
 
     @FXML
-    private ImageView ivJobDone;
+    private Button btnJobDone;
 
     @FXML
     private ImageView ivCustomerPhoto;
 
     @FXML
     private ImageView ivStyle;
+
+
+    private Job currentJob;
 
     /**
      * Called right after declaring controller
@@ -87,7 +96,24 @@ public class HomeController {
         btnAll.setToggleGroup(filterBtnGroup);
         btnToday.setToggleGroup(filterBtnGroup);
         btnNotDone.setToggleGroup(filterBtnGroup);
+
+        btnJobDone.setVisible(false);
+        implementCtxtForJobDone();
         setUp();
+    }
+
+    /**
+     * Sets up the context menu to be shown for jobDone button
+     */
+    private void implementCtxtForJobDone() {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem delivered = new MenuItem("Delivered");
+        delivered.setOnAction((event) -> {
+            setDelivered(currentJob);
+        });
+
+        contextMenu.getItems().addAll(delivered);
+        btnJobDone.setContextMenu(contextMenu);
     }
 
     /**
@@ -96,6 +122,8 @@ public class HomeController {
      * @param job the job to be viewed
      */
     private void setDetails(Job job) {
+        this.currentJob = job;
+        btnJobDone.setVisible(true);
         gpMeasurements.getChildren().clear();
         lblCustomerName.setText(job.getCustomer().getName());
         lblCustomerMobile.setText(job.getCustomer().getMobile());
@@ -129,6 +157,8 @@ public class HomeController {
         } else {
             ivStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
         }
+
+        setBtnStateForDone(job);
     }
 
     /**
@@ -176,10 +206,31 @@ public class HomeController {
                 ivCustomerPhoto.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
             }
 
+            Label lblJobType = (Label) apJobItem.lookup("#jobType");
+            lblJobType.setText(j.getJobType());
+
+            Label lblArrivalDate = (Label) apJobItem.lookup("#arrivalDate");
+            lblArrivalDate.setText(Utils.formatDate(j.getDateArrived()));
+
+            Circle cDone = (Circle) apJobItem.lookup("#isDone");
+            if (j.isDone()) {
+                cDone.setFill(Color.DEEPSKYBLUE);
+            } else {
+                cDone.setFill(Color.GRAY);
+            }
+
+            if (j.isDelivered()) {
+                cDone.setFill(Color.MEDIUMSPRINGGREEN);
+            }
+
             vbJobs.getChildren().add(apJobItem);
         }
     }
 
+    /**
+     * Displays the Add new window to add a new job
+     * @throws IOException thrown when the fxml view file is not found
+     */
     @FXML
     private void showAddNew() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(PACKAGE_DIR + "views/view_add_job.fxml"));
@@ -188,6 +239,7 @@ public class HomeController {
         controller.setHomeController(this);
         newJobStage = new Stage();
         newJobStage.setScene(new Scene(apNewJob));
+        newJobStage.setTitle("Add New");
 
         Main mainApp = Utils.getMainApp();
         Stage primaryStage = mainApp.getPrimaryStage();
@@ -215,6 +267,7 @@ public class HomeController {
                 System.out.println(jobs.size());
                 try {
                     loadJobs();
+                    selectFirstJob();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -236,5 +289,56 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Selects first job to set details
+     */
+    private void selectFirstJob() {
+        if (jobs.size() > 0) {
+            setDetails(jobs.get(0));
+        }
+    }
+
+    /**
+     * Sets a job as done or not
+     */
+    @FXML
+    private void toggleDone() {
+        if (currentJob != null) {
+            currentJob.setDone(!currentJob.isDone());
+            currentJob.save();
+
+            setBtnStateForDone(currentJob);
+        }
+    }
+
+    /**
+     * Set button state for done
+     */
+    private void setBtnStateForDone(Job job) {
+        if (job.isDone()) {
+            btnJobDone.setText("Completed!");
+            btnJobDone.setStyle("-fx-background-color:#00bfff;-fx-text-fill:#fff");
+        } else {
+            btnJobDone.setText("Done");
+            btnJobDone.setStyle("-fx-background-color:#cccccc;");
+        }
+
+        if (job.isDelivered()) {
+            btnJobDone.setText("Delivered!");
+            btnJobDone.setStyle("-fx-background-color:#00fa9a;-fx-text-fill:#000");
+        }
+    }
+
+    /**
+     * Sets a job as delivered
+     */
+    private void setDelivered(Job job) {
+        if (job == null) return;
+        job.setDelivered(true);
+        job.save();
+
+        setBtnStateForDone(job);
     }
 }

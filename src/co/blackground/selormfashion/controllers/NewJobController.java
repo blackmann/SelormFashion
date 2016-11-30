@@ -5,6 +5,8 @@ import co.blackground.selormfashion.Utils;
 import co.blackground.selormfashion.extras.FormField;
 import co.blackground.selormfashion.models.Customer;
 import co.blackground.selormfashion.models.Job;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -24,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
 import static co.blackground.selormfashion.models.Job.Type.TOPS;
@@ -57,6 +60,12 @@ public class NewJobController {
 
     @FXML
     private ImageView imgStyle;
+
+    @FXML
+    private TextField tfDeposit;
+
+    @FXML
+    private TextField tfAmount;
 
     private HomeController homeController;
 
@@ -118,6 +127,11 @@ public class NewJobController {
         formFields.add(new FormField("Length", "length", fieldValue("length")));
         formFields.add(new FormField("Sleeve Length", "sleeve_length", fieldValue("sleeve_length")));
         formFields.add(new FormField("Sleeve Bass", "sleeve_bass", fieldValue("sleeve_bass")));
+        formFields.add(new FormField("Sleeve Thighs", "sleeve_thighs", fieldValue("sleeve_thighs")));
+        formFields.add(new FormField("Sleeve TBass", "sleeve_tbass", fieldValue("sleeve_tbass")));
+        formFields.add(new FormField("Chest", "chest", fieldValue("chest")));
+        formFields.add(new FormField("Stomach", "stomach", fieldValue("stomach")));
+        formFields.add(new FormField("Neck", "neck", fieldValue("neck")));
 
         createForm();
     }
@@ -147,6 +161,7 @@ public class NewJobController {
             lblTitle.setFont(new Font(13.0));
             gpForm.add(lblTitle, 0, row);
             TextField tfValue = new TextField(f.getValue());
+            Utils.acceptNumberOnly(tfValue);
             gpForm.add(tfValue, 1, row++);
         }
     }
@@ -181,7 +196,8 @@ public class NewJobController {
             activeJob.setUserPhoto(photoDest.toString());
         }
 
-
+        activeJob.setDeposit(toDouble(tfDeposit.getText()));
+        activeJob.setDateArrived(new Date());
         activeJob.save();
         homeController.savedNew();
     }
@@ -194,9 +210,6 @@ public class NewJobController {
         userPhoto = choosePhoto("Customer's Photo");
         if (userPhoto == null) return;
         imgUser.setImage(new Image(new FileInputStream(userPhoto)));
-        imgUser.setFitHeight(225);
-        imgUser.setFitWidth(319);
-        imgUser.setPreserveRatio(true);
     }
 
     /**
@@ -207,9 +220,6 @@ public class NewJobController {
         userStyle = choosePhoto("Dress Style");
         if (userStyle == null) return;
         imgStyle.setImage(new Image(new FileInputStream(userStyle)));
-        imgStyle.setFitHeight(225);
-        imgStyle.setFitWidth(319);
-        imgStyle.setPreserveRatio(true);
     }
 
     /**
@@ -256,7 +266,7 @@ public class NewJobController {
         return string(activeJob.getMeasure(field));
     }
 
-    public void setHomeController(HomeController stage) {
+    void setHomeController(HomeController stage) {
         this.homeController = stage;
     }
 
@@ -265,7 +275,8 @@ public class NewJobController {
         return Double.toString(val);
     }
 
-    private Double toDouble(String s) {
+    private double toDouble(String s) {
+        if (s == null || s.isEmpty()) return 0;
         return Double.valueOf(s);
     }
 }

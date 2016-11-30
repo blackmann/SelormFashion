@@ -20,7 +20,7 @@ public class Job {
     @XmlElementWrapper(name = "measures")
     private HashMap<String, Double> measures;
     private Customer customer;
-    private Date dateReceived;
+    private Date dateDelivered;
     private Date dateArrived;
     private String userStyle;
     private String userPhoto;
@@ -28,6 +28,7 @@ public class Job {
     private double deposit;
     private boolean done;
     private String jobType;
+    private boolean delivered;
 
 
     public Job() {
@@ -66,12 +67,12 @@ public class Job {
         this.customer = customer;
     }
 
-    public Date getDateReceived() {
-        return dateReceived;
+    public Date getDateDelivered() {
+        return dateDelivered;
     }
 
-    public void setDateReceived(Date dateReceived) {
-        this.dateReceived = dateReceived;
+    public void setDateDelivered(Date dateDelivered) {
+        this.dateDelivered = dateDelivered;
     }
 
     public double getJobCost() {
@@ -96,6 +97,10 @@ public class Job {
 
     public void setDone(boolean done) {
         this.done = done;
+        if (!done) {
+            setDelivered(false);
+            setDateDelivered(null);
+        }
     }
 
     public Date getDateArrived() {
@@ -141,6 +146,20 @@ public class Job {
 
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public boolean isDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(boolean delivered) {
+        this.delivered = delivered;
+        if (delivered) {
+            dateDelivered = new Date();
+            if (!done) setDone(true);
+        } else {
+            dateDelivered = null;
+        }
     }
 
     /**
