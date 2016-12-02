@@ -4,9 +4,10 @@ import co.blackground.selormfashion.Main;
 import co.blackground.selormfashion.Utils;
 import co.blackground.selormfashion.managers.PersistenceManager;
 import co.blackground.selormfashion.models.Job;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
@@ -37,10 +39,9 @@ import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
  */
 public class HomeController {
 
-    private static final int DONE_COLOR = 1;
-
     private ArrayList<Job> jobs;
     private ArrayList<Job.Filter> filters;
+    private Date date;
     private String searchKeyword;
 
     private Stage newJobStage;
@@ -49,19 +50,7 @@ public class HomeController {
     private DatePicker dpFilterDatePicker;
 
     @FXML
-    private ToggleButton btnToday;
-
-    @FXML
-    private ToggleButton btnAll;
-
-    @FXML
-    private ToggleButton btnNotDone;
-
-    @FXML
-    private Button btnAddNew;
-
-    @FXML
-    private Button btnSearch;
+    private ChoiceBox<Job.Filter> cbFilter;
 
     @FXML
     private VBox vbJobs;
@@ -84,22 +73,46 @@ public class HomeController {
     @FXML
     private ImageView ivStyle;
 
+    @FXML
+    private Label lblCost;
+
+    @FXML
+    private Label lblDeposit;
+
+    @FXML
+    private Label lblType;
+
+    @FXML
+    private TextField tfSearch;
+
 
     private Job currentJob;
+    private Job.Filter selectedFilter;
 
     /**
      * Called right after declaring controller
      */
     @FXML
     private void initialize() {
-        ToggleGroup filterBtnGroup = new ToggleGroup();
-        btnAll.setToggleGroup(filterBtnGroup);
-        btnToday.setToggleGroup(filterBtnGroup);
-        btnNotDone.setToggleGroup(filterBtnGroup);
+        filters = new ArrayList<>();
+        filters.add(Job.Filter.ALL);
+        filters.add(Job.Filter.TODAY);
+        filters.add(Job.Filter.TROUSERS);
+        filters.add(Job.Filter.TOPS);
+        filters.add(Job.Filter.NOT_DONE);
+        filters.add(Job.Filter.DONE);
 
         btnJobDone.setVisible(false);
         implementCtxtForJobDone();
         setUp();
+
+        cbFilter.setItems(FXCollections.observableList(filters));
+        cbFilter.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                setFilter(filters.get(newValue.intValue()));
+            }
+        });
     }
 
     /**
@@ -126,7 +139,7 @@ public class HomeController {
         btnJobDone.setVisible(true);
         gpMeasurements.getChildren().clear();
         lblCustomerName.setText(job.getCustomer().getName());
-        lblCustomerMobile.setText(job.getCustomer().getMobile());
+        lblCustomerMobile.setText(Utils.friendlyText(job.getCustomer().getMobile()));
         int column = 0;
         int row = 0;
         for (Map.Entry<String, Double> entry : job.getMeasures().entrySet()) {
@@ -157,6 +170,10 @@ public class HomeController {
         } else {
             ivStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
         }
+
+        lblCost.setText(Double.toString(job.getJobCost()));
+        lblDeposit.setText(Double.toString(job.getDeposit()));
+        lblType.setText(job.getJobType());
 
         setBtnStateForDone(job);
     }
@@ -189,11 +206,17 @@ public class HomeController {
      * Loads saved jobs into list
      * @throws IOException if file read fails when loading list items fxml
      */
-    private void loadJobs() throws IOException {
+    private void loadJobs(boolean withSearch) throws IOException {
         // remove all children
         vbJobs.getChildren().clear();
 
         for (Job j : jobs) {
+            if (!matchesFilter(j)) continue;
+            if (withSearch) {
+                if (!matchesSearch(j)) {
+                    continue;
+                }
+            }
             AnchorPane apJobItem = FXMLLoader.load(getClass().getResource(PACKAGE_DIR + "views/view_job_item.fxml"));
             apJobItem.setOnMouseClicked((event) -> setDetails(j));
             Label lblCustomerName = (Label) apJobItem.lookup("#customerName");
@@ -225,6 +248,14 @@ public class HomeController {
 
             vbJobs.getChildren().add(apJobItem);
         }
+    }
+
+    /**
+     * Overloaded method for loading jobs into the list
+     * @throws IOException
+     */
+    private void loadJobs() throws IOException{
+        loadJobs(false);
     }
 
     /**
@@ -268,6 +299,8 @@ public class HomeController {
                 try {
                     loadJobs();
                     selectFirstJob();
+
+                    cbFilter.setValue(Job.Filter.ALL);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -340,5 +373,82 @@ public class HomeController {
         job.save();
 
         setBtnStateForDone(job);
+    }
+
+    /**
+     * Sets the filter to be used and refreshes the list
+     * @param filter the filter to be set
+     */
+    private void setFilter(Job.Filter filter) {
+        this.selectedFilter = filter;
+        if (selectedFilter == Job.Filter.ALL) date = null;
+        try {
+            loadJobs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        selectFirstJob();
+    }
+
+    /**
+     * Verify if a job matches the selected filter
+     * @param job the job to process
+     * @return Returns true if job passes the selected filter else false
+     */
+    private boolean matchesFilter(Job job) {
+        if (selectedFilter == Job.Filter.ALL) {
+            return date == null || isSameDate(date, job.getDateArrived());
+        }
+
+        if (selectedFilter == Job.Filter.TROUSERS) {
+            return job.getJobType().equals(Job.Type.TROUSER);
+        }
+
+        if (selectedFilter == Job.Filter.TOPS) {
+            return job.getJobType().equals(Job.Type.TOPS);
+        }
+
+        if (selectedFilter == Job.Filter.TODAY) {
+            date = new Date();
+            return isSameDate(date, job.getDateArrived());
+        }
+
+        if (selectedFilter == Job.Filter.NOT_DONE) {
+            return !job.isDone();
+        }
+
+        if (selectedFilter == Job.Filter.DONE) {
+            return job.isDone();
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if both dates are on the same day
+     * @param date first date to compared with the other
+     * @param date2 second date to be compared with
+     * @return Returns true if both dates are on the same day else false
+     */
+    private boolean isSameDate(Date date, Date date2) {
+        return (date.getDate() == date2.getDate() && date.getMonth() == date2.getMonth()
+                && date.getYear() == date2.getYear());
+    }
+
+    @FXML
+    private void performSearch() {
+        searchKeyword = tfSearch.getText();
+        if (searchKeyword == null || searchKeyword.isEmpty()) return;
+
+        try {
+            loadJobs(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean matchesSearch(Job job) {
+        if (searchKeyword == null) return true;
+        return job.getCustomer().getName().toLowerCase().contains(searchKeyword.toLowerCase());
     }
 }

@@ -86,4 +86,8 @@ public class Utils {
         if (date == null) return "";
         return date.toString();
     }
+
+    public static String friendlyText(String mobile) {
+        return mobile == null || mobile.isEmpty() ? "Not Availabe" : mobile;
+    }
 }

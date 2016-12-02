@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This singleton is responsible for managing the persistence
@@ -91,6 +92,7 @@ public class PersistenceManager {
      */
     @XmlElement(name = "job")
     public ArrayList<Job> getAllJobs() {
+        Collections.sort(jobs);
         return jobs;
     }
 }

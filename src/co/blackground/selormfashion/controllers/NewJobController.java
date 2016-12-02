@@ -197,6 +197,7 @@ public class NewJobController {
         }
 
         activeJob.setDeposit(toDouble(tfDeposit.getText()));
+        activeJob.setJobCost(toDouble(tfAmount.getText()));
         activeJob.setDateArrived(new Date());
         activeJob.save();
         homeController.savedNew();

@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 @XmlRootElement(name = "job")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Job {
+public class Job implements Comparable<Job> {
 
     private transient PersistenceManager persistenceManager;
     @XmlAttribute(name = "id")
@@ -162,11 +162,21 @@ public class Job {
         }
     }
 
+    @Override
+    public int compareTo(Job o) {
+        return o.getDateArrived().compareTo(this.getDateArrived());
+    }
+
     /**
      * Helps in search filters
      */
     public enum Filter {
-        ALL, TODAY, NOT_DONE, DONE, TOPS, TROUSERS
+        ALL, TODAY, NOT_DONE, DONE, TOPS, TROUSERS;
+
+        @Override
+        public String toString() {
+            return super.toString().replace("_", " ");
+        }
     }
 
     /**
