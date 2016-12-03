@@ -83,7 +83,7 @@ public class HomeController {
     @FXML
     private TextField tfSearch;
 
-    private Alert loading;
+    // private Alert loading;
 
     private Job currentJob;
     private Job.Filter selectedFilter;
@@ -110,9 +110,9 @@ public class HomeController {
                 .selectedIndexProperty()
                 .addListener((observable, oldValue, newValue) -> setFilter(filters.get(newValue.intValue())));
 
-        loading = new Alert(Alert.AlertType.INFORMATION, "Initializing. Please wait...");
+        /*loading = new Alert(Alert.AlertType.INFORMATION, "Initializing. Please wait...");
         loading.setHeaderText("Getting Ready!");
-        loading.setTitle("Loading");
+        loading.setTitle("Loading");*/
     }
 
     /**
@@ -296,7 +296,7 @@ public class HomeController {
 
             @Override
             protected void succeeded() {
-                loading.show();
+                // loading.show();
                 jobs = PersistenceManager.getInstance().getAllJobs();
                 System.out.println(jobs.size());
                 try {
@@ -306,7 +306,7 @@ public class HomeController {
                     cbFilter.setValue(Job.Filter.ALL);
                     setUpDatePicker();
 
-                    loading.close();
+                    // loading.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -500,5 +500,24 @@ public class HomeController {
     @FXML
     private void close() {
         Utils.getMainApp().close();
+    }
+
+    /**
+     * Reset a password for application
+     */
+    @FXML
+    private void resetPassword() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(PACKAGE_DIR + "views/view_reset_password.fxml"));
+        AnchorPane pane = loader.load();
+        ResetPasswordController controller = loader.getController();
+
+        Stage resetPasswordStage = new Stage();
+        resetPasswordStage.setScene(new Scene(pane));
+        resetPasswordStage.setResizable(false);
+        resetPasswordStage.initModality(Modality.WINDOW_MODAL);
+        resetPasswordStage.initOwner(Utils.getMainApp().getPrimaryStage());
+
+        controller.setStage(resetPasswordStage);
+        resetPasswordStage.show();
     }
 }

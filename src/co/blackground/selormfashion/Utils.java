@@ -5,10 +5,14 @@ import javafx.scene.control.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.prefs.Preferences;
 
 public class Utils {
 
+    private static final String PASSWORD = "PASSWORD";
     private static Main mainApp;
+    private static boolean loggedOn;
+    private static Preferences preference;
 
     /**
      * @return Returns the #mainApp instance
@@ -82,12 +86,64 @@ public class Utils {
         });
     }
 
+    /**
+     * Makes @param date readable to humans
+     *
+     * @param date the date to be formatted
+     * @return a formatted date
+     */
     public static String formatDate(Date date) {
         if (date == null) return "";
         return date.toString();
     }
 
-    public static String friendlyText(String mobile) {
-        return mobile == null || mobile.isEmpty() ? "Not Availabe" : mobile;
+    /**
+     * Beautifies text to be informative, null or empty string become
+     * "Not Availabe", but anything else is return as is
+     *
+     * @param str the text to be beautified
+     * @return a beautified string
+     */
+    public static String friendlyText(String str) {
+        return str == null || str.isEmpty() ? "Not Availabe" : str;
+    }
+
+    /**
+     * Verifies if the supplied password is correct
+     * with the one the preferences
+     *
+     * @param text the text/password to be verified as correct
+     * @return Returns true if the password is correct else false
+     */
+    public static boolean verifyPassword(String text) {
+        initPrefs();
+
+        String password = preference.get(PASSWORD, "1234");
+        if (text == null || text.isEmpty()) return false;
+        loggedOn = password.equals(text);
+        return loggedOn;
+    }
+
+    /**
+     * @return Returns true if the user logged in successfully
+     */
+    static boolean isLogged() {
+        return loggedOn;
+    }
+
+    /**
+     * Sets a new password
+     *
+     * @param password the new password
+     */
+    public static void setNewPassword(String password) {
+        initPrefs();
+        preference.put(PASSWORD, password);
+    }
+
+    private static void initPrefs() {
+        if (preference == null) {
+            preference = Preferences.userNodeForPackage(Utils.class);
+        }
     }
 }
