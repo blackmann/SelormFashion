@@ -4,8 +4,6 @@ import co.blackground.selormfashion.Main;
 import co.blackground.selormfashion.Utils;
 import co.blackground.selormfashion.managers.PersistenceManager;
 import co.blackground.selormfashion.models.Job;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -85,6 +83,7 @@ public class HomeController {
     @FXML
     private TextField tfSearch;
 
+    private Alert loading;
 
     private Job currentJob;
     private Job.Filter selectedFilter;
@@ -107,12 +106,13 @@ public class HomeController {
         setUp();
 
         cbFilter.setItems(FXCollections.observableList(filters));
-        cbFilter.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                setFilter(filters.get(newValue.intValue()));
-            }
-        });
+        cbFilter.getSelectionModel()
+                .selectedIndexProperty()
+                .addListener((observable, oldValue, newValue) -> setFilter(filters.get(newValue.intValue())));
+
+        loading = new Alert(Alert.AlertType.INFORMATION, "Initializing. Please wait...");
+        loading.setHeaderText("Getting Ready!");
+        loading.setTitle("Loading");
     }
 
     /**
@@ -121,9 +121,7 @@ public class HomeController {
     private void implementCtxtForJobDone() {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem delivered = new MenuItem("Delivered");
-        delivered.setOnAction((event) -> {
-            setDelivered(currentJob);
-        });
+        delivered.setOnAction((event) -> setDelivered(currentJob));
 
         contextMenu.getItems().addAll(delivered);
         btnJobDone.setContextMenu(contextMenu);
@@ -204,6 +202,7 @@ public class HomeController {
 
     /**
      * Loads saved jobs into list
+     *
      * @throws IOException if file read fails when loading list items fxml
      */
     private void loadJobs(boolean withSearch) throws IOException {
@@ -252,14 +251,17 @@ public class HomeController {
 
     /**
      * Overloaded method for loading jobs into the list
-     * @throws IOException
+     *
+     * @throws IOException IOException is thrown if the fxml file is
+     *                     not found
      */
-    private void loadJobs() throws IOException{
+    private void loadJobs() throws IOException {
         loadJobs(false);
     }
 
     /**
      * Displays the Add new window to add a new job
+     *
      * @throws IOException thrown when the fxml view file is not found
      */
     @FXML
@@ -282,7 +284,7 @@ public class HomeController {
 
     /**
      * Load all jobs from persistence manager and
-     * generate the list
+     * generate the list and makes some preparations
      */
     public void setUp() {
         Task<Void> getJobs = new Task<Void>() {
@@ -294,6 +296,7 @@ public class HomeController {
 
             @Override
             protected void succeeded() {
+                loading.show();
                 jobs = PersistenceManager.getInstance().getAllJobs();
                 System.out.println(jobs.size());
                 try {
@@ -301,6 +304,9 @@ public class HomeController {
                     selectFirstJob();
 
                     cbFilter.setValue(Job.Filter.ALL);
+                    setUpDatePicker();
+
+                    loading.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -377,6 +383,7 @@ public class HomeController {
 
     /**
      * Sets the filter to be used and refreshes the list
+     *
      * @param filter the filter to be set
      */
     private void setFilter(Job.Filter filter) {
@@ -392,6 +399,7 @@ public class HomeController {
 
     /**
      * Verify if a job matches the selected filter
+     *
      * @param job the job to process
      * @return Returns true if job passes the selected filter else false
      */
@@ -426,7 +434,8 @@ public class HomeController {
 
     /**
      * Checks if both dates are on the same day
-     * @param date first date to compared with the other
+     *
+     * @param date  first date to compared with the other
      * @param date2 second date to be compared with
      * @return Returns true if both dates are on the same day else false
      */
@@ -435,6 +444,10 @@ public class HomeController {
                 && date.getYear() == date2.getYear());
     }
 
+    /**
+     * Performs a search with the keyword entered into
+     * the search textfield
+     */
     @FXML
     private void performSearch() {
         searchKeyword = tfSearch.getText();
@@ -447,8 +460,45 @@ public class HomeController {
         }
     }
 
+    /**
+     * Checks if a job's customer name matches the given keyword
+     *
+     * @param job the job to whose customer is to be checked
+     * @return Returns true if the customer has the keyword contained
+     * in his/her name else false
+     */
     private boolean matchesSearch(Job job) {
         if (searchKeyword == null) return true;
         return job.getCustomer().getName().toLowerCase().contains(searchKeyword.toLowerCase());
+    }
+
+    private void setUpDatePicker() {
+
+    }
+
+    /**
+     * Shows the meta information of the app
+     *
+     * @throws IOException
+     */
+    @FXML
+    private void showAbout() throws IOException {
+        AnchorPane apAbout = FXMLLoader.load(getClass().getResource(PACKAGE_DIR + "views/view_about.fxml"));
+        Stage aboutStage = new Stage();
+        aboutStage.setScene(new Scene(apAbout));
+
+        aboutStage.initOwner(Utils.getMainApp().getPrimaryStage());
+        aboutStage.initModality(Modality.WINDOW_MODAL);
+        aboutStage.setResizable(false);
+
+        aboutStage.show();
+    }
+
+    /**
+     * Closes the app
+     */
+    @FXML
+    private void close() {
+        Utils.getMainApp().close();
     }
 }
