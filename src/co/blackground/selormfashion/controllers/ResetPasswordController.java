@@ -41,10 +41,12 @@ public class ResetPasswordController {
             }
 
             Utils.setNewPassword(confirmed);
+            stage.close();
         } else {
             lblFeedback.setText("The old password you entered is incorrect!");
+
         }
 
-        stage.close();
+
     }
 }
