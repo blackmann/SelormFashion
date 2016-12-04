@@ -113,6 +113,15 @@ public class HomeController {
         /*loading = new Alert(Alert.AlertType.INFORMATION, "Initializing. Please wait...");
         loading.setHeaderText("Getting Ready!");
         loading.setTitle("Loading");*/
+
+        dpFilterDatePicker.setOnAction((e) -> {
+            date = java.sql.Date.valueOf(dpFilterDatePicker.getValue());
+            try {
+                loadJobs();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -388,7 +397,7 @@ public class HomeController {
      */
     private void setFilter(Job.Filter filter) {
         this.selectedFilter = filter;
-        if (selectedFilter == Job.Filter.ALL) date = null;
+        // if (selectedFilter == Job.Filter.ALL) date = null;
         try {
             loadJobs();
         } catch (IOException e) {
@@ -408,28 +417,29 @@ public class HomeController {
             return date == null || isSameDate(date, job.getDateArrived());
         }
 
+        boolean res = true;
         if (selectedFilter == Job.Filter.TROUSERS) {
-            return job.getJobType().equals(Job.Type.TROUSER);
+            res = job.getJobType().equals(Job.Type.TROUSER);
         }
 
         if (selectedFilter == Job.Filter.TOPS) {
-            return job.getJobType().equals(Job.Type.TOPS);
+            res = job.getJobType().equals(Job.Type.TOPS);
         }
 
         if (selectedFilter == Job.Filter.TODAY) {
             date = new Date();
-            return isSameDate(date, job.getDateArrived());
+            res = isSameDate(date, job.getDateArrived());
         }
 
         if (selectedFilter == Job.Filter.NOT_DONE) {
-            return !job.isDone();
+            res = !job.isDone();
         }
 
         if (selectedFilter == Job.Filter.DONE) {
-            return job.isDone();
+            res = job.isDone();
         }
 
-        return true;
+        return res && (date == null || isSameDate(date, job.getDateArrived()));
     }
 
     /**
@@ -479,7 +489,7 @@ public class HomeController {
     /**
      * Shows the meta information of the app
      *
-     * @throws IOException
+     * @throws IOException Throws IOException if the fxml file is not found
      */
     @FXML
     private void showAbout() throws IOException {
@@ -519,5 +529,14 @@ public class HomeController {
 
         controller.setStage(resetPasswordStage);
         resetPasswordStage.show();
+    }
+
+    /**
+     * Clears the filter
+     */
+    @FXML
+    private void clearFilter() {
+        date = null;
+        cbFilter.setValue(Job.Filter.ALL);
     }
 }

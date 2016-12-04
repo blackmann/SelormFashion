@@ -25,17 +25,24 @@
                                                     </HBox.margin>
                                                 </TextField>
                                                 <Button mnemonicParsing="false" onAction="#performSearch" text="Search" />
-                                                <Button fx:id="btnAddNew" mnemonicParsing="false" onAction="#showAddNew" text="Add New Job" />
+                                                <Button mnemonicParsing="false" onAction="#showAddNew"
+                                                        text="Add New Job"/>
                                             </children>
                                             <VBox.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                             </VBox.margin>
                                         </HBox>
-                                        <Label text="Filter:">
-                                            <padding>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                            </padding>
-                                        </Label>
+                                        <AnchorPane>
+                                            <children>
+                                                <Label text="Filter:">
+                                                    <padding>
+                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+                                                    </padding>
+                                                </Label>
+                                                <Hyperlink layoutX="319.0" layoutY="1.0" onAction="#clearFilter"
+                                                           text="Clear Filter"/>
+                                            </children>
+                                        </AnchorPane>
                                         <HBox prefWidth="200.0" spacing="8.0">
                                             <children>
                                                 <DatePicker fx:id="dpFilterDatePicker" />
