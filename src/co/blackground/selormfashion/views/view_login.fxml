@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="237.0" prefWidth="372.0" stylesheets="@styles/JMetroLightTheme.css"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            fx:controller="co.blackground.selormfashion.controllers.LoginController">
+    <children>
+        <Label fx:id="lblFeedback" layoutX="48.0" layoutY="203.0" textFill="#005ef5">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+        <Button layoutX="264.0" layoutY="163.0" mnemonicParsing="false" onAction="#verifyPassword" prefHeight="31.0"
+                prefWidth="61.0" text="Enter"/>
+        <Button layoutX="188.0" layoutY="163.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0"
+                prefWidth="61.0" text="Cancel"/>
+        <PasswordField fx:id="pfPassword" layoutX="48.0" layoutY="106.0" prefHeight="44.0" prefWidth="275.0"
+                       promptText="Enter Password">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </PasswordField>
+        <ImageView fitHeight="78.0" fitWidth="200.0" layoutX="120.0" layoutY="14.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@resources/shop_logo.png"/>
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
