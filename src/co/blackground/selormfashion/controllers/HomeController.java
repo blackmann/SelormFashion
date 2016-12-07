@@ -139,7 +139,10 @@ public class HomeController {
         MenuItem delete = new MenuItem("Delete");
         delete.setOnAction((e) -> deleteJob());
 
-        contextMenu.getItems().addAll(delivered, delete);
+        MenuItem edit = new MenuItem("Edit");
+        edit.setOnAction((e) -> editJob());
+
+        contextMenu.getItems().addAll(delivered, edit, delete);
         btnJobDone.setContextMenu(contextMenu);
     }
 
@@ -304,7 +307,7 @@ public class HomeController {
      * @throws IOException thrown when the fxml view file is not found
      */
     @FXML
-    private void showAddNew() throws IOException {
+    private NewJobController showAddNew() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(PACKAGE_DIR + "views/view_add_job.fxml"));
         AnchorPane apNewJob = loader.load();
         NewJobController controller = loader.getController();
@@ -319,6 +322,8 @@ public class HomeController {
         newJobStage.initModality(Modality.WINDOW_MODAL);
         Utils.setIcon(newJobStage, mainApp);
         newJobStage.show();
+
+        return controller;
     }
 
     /**
@@ -584,5 +589,13 @@ public class HomeController {
             reloadJobs();
         }
 
+    }
+
+    private void editJob() {
+        try {
+            showAddNew().setActiveJob(currentJob);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

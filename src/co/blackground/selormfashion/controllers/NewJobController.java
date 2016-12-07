@@ -304,9 +304,23 @@ public class NewJobController {
         this.activeJob = job;
         setUpTopsForm();
         setPhotos();
+        tfCustomerName.setText(activeJob.getCustomer().getName());
+        tfAmount.setText(Double.toString(activeJob.getJobCost()));
+        tfDeposit.setText(Double.toString(activeJob.getDeposit()));
+        tfCustomerMobile.setText(activeJob.getCustomer().getMobile());
     }
 
     private void setPhotos() {
-        // todo
+        if (Utils.isValidPhoto(activeJob.getUserPhoto())) {
+            Utils.setImage(imgUser, activeJob.getUserPhoto());
+        } else {
+            imgUser.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
+        }
+
+        if (Utils.isValidPhoto(activeJob.getUserStyle())) {
+            Utils.setImage(imgStyle, activeJob.getUserStyle());
+        } else {
+            imgStyle.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/default-placeholder.png").toString()));
+        }
     }
 }

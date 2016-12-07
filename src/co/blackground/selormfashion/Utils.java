@@ -2,9 +2,12 @@ package co.blackground.selormfashion;
 
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.prefs.Preferences;
@@ -150,6 +153,18 @@ public class Utils {
     }
 
     public static void setIcon(Stage stage, Main main) {
-        stage.getIcons().add(new Image(main.getClass().getResource("views/resources/icon.png").toString()));
+        stage.getIcons().add(new Image(main.getClass().getResource("views/resources/icon.jpg").toString()));
+    }
+
+    public static boolean isValidPhoto(String photo) {
+        return photo != null && !photo.isEmpty();
+    }
+
+    public static void setImage(ImageView iv, String photo) {
+        try {
+            iv.setImage(new Image(new FileInputStream(new File(photo))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

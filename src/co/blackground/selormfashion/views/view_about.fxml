@@ -23,7 +23,7 @@
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="84.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
-                                <Image url="@resources/shop_logo.png"/>
+                                <Image url="@resources/shop_logo.jpg"/>
                             </image>
                         </ImageView>
                     </children>
@@ -61,7 +61,7 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <Label layoutX="14.0" layoutY="373.0" text="(c) 2017 Blackground Labs">
+        <Label layoutX="14.0" layoutY="373.0" text="(c) 2017 Selorm's Fashion">
             <font>
                 <Font size="13.0"/>
             </font>

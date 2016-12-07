@@ -1,74 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jobs>
-    <job id="c2a47841-d710-42b5-8bfa-cbb59d329357">
+    <job id="f3c38def-6a6b-4125-8f1d-157a4640d7dc">
         <topMeasures>
             <entry>
                 <key>chest</key>
-                <value>0.0</value>
+                <value>52.0</value>
             </entry>
             <entry>
                 <key>sleeve_tbass</key>
-                <value>0.0</value>
+                <value>6.0</value>
             </entry>
             <entry>
                 <key>sleeve_thighs</key>
-                <value>45.0</value>
+                <value>56.0</value>
             </entry>
             <entry>
                 <key>sleeve_bass</key>
-                <value>96.0</value>
+                <value>5.0</value>
             </entry>
             <entry>
                 <key>length</key>
-                <value>45.0</value>
+                <value>985.0</value>
             </entry>
             <entry>
                 <key>back</key>
-                <value>12.0</value>
+                <value>55.0</value>
             </entry>
             <entry>
                 <key>stomach</key>
-                <value>0.0</value>
+                <value>6.0</value>
             </entry>
             <entry>
                 <key>sleeve_length</key>
-                <value>13.0</value>
+                <value>6565.0</value>
             </entry>
             <entry>
                 <key>neck</key>
-                <value>0.0</value>
+                <value>6.0</value>
             </entry>
         </topMeasures>
         <trouserMeasures>
             <entry>
                 <key>thighs</key>
-                <value>12.0</value>
+                <value>2.0</value>
             </entry>
             <entry>
                 <key>bass</key>
-                <value>10.0</value>
+                <value>62.0</value>
             </entry>
             <entry>
                 <key>hips</key>
-                <value>0.0</value>
+                <value>2.0</value>
             </entry>
             <entry>
                 <key>length</key>
-                <value>13.0</value>
+                <value>5.0</value>
             </entry>
             <entry>
                 <key>waist</key>
-                <value>14.0</value>
+                <value>55.0</value>
             </entry>
         </trouserMeasures>
-        <customer id="92a6b2b7-2a85-4952-9738-00e6c4511cf2">
-            <name>Kwame Stan</name>
-            <mobile>1234569</mobile>
+        <customer id="d029145a-1c1a-48bc-ba9e-9e803e590a25">
+            <name>esss</name>
+            <mobile>4585</mobile>
         </customer>
-        <dateArrived>2016-12-07T14:23:22.705Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>false</done>
-        <delivered>false</delivered>
+        <dateDelivered>2016-12-07T15:13:45.847Z</dateDelivered>
+        <dateArrived>2016-12-07T15:12:57.195Z</dateArrived>
+        <userStyle>styles\bene2.jpg</userStyle>
+        <userPhoto>photos\1412793116240251.jpg</userPhoto>
+        <jobCost>645.0</jobCost>
+        <deposit>6.0</deposit>
+        <done>true</done>
+        <delivered>true</delivered>
     </job>
 </jobs>
