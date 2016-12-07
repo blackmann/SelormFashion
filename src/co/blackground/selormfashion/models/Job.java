@@ -17,8 +17,10 @@ public class Job implements Comparable<Job> {
     private transient PersistenceManager persistenceManager;
     @XmlAttribute(name = "id")
     private UUID id;
-    @XmlElementWrapper(name = "measures")
-    private HashMap<String, Double> measures;
+    @XmlElementWrapper(name = "topMeasures")
+    private HashMap<String, Double> topMeasures;
+    @XmlElementWrapper(name = "trouserMeasures")
+    private HashMap<String, Double> trouserMeasures;
     private Customer customer;
     private Date dateDelivered;
     private Date dateArrived;
@@ -27,15 +29,14 @@ public class Job implements Comparable<Job> {
     private double jobCost;
     private double deposit;
     private boolean done;
-    private String jobType;
     private boolean delivered;
 
 
     public Job() {
         this.id = UUID.randomUUID();
         persistenceManager = PersistenceManager.getInstance();
-        measures = new HashMap<>();
-        jobType = Type.TOPS;
+        topMeasures = new HashMap<>();
+        trouserMeasures = new HashMap<>();
         customer = new Customer();
     }
 
@@ -111,25 +112,26 @@ public class Job implements Comparable<Job> {
         this.dateArrived = dateArrived;
     }
 
-    public String getJobType() {
-        return jobType;
+    public void addTopMeasure(String what, double value) {
+        topMeasures.put(what, value);
     }
 
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
+    public void addTrouserMeasure(String what, double value) {
+        trouserMeasures.put(what, value);
     }
 
-    public void addMeasure(String what, double value) {
-        measures.put(what, value);
+    public HashMap<String, Double> getTopMeasures() {
+        return topMeasures;
     }
 
-    public HashMap<String, Double> getMeasures() {
-        return measures;
+    public double getTrouserMeasure(String what) {
+        if (!trouserMeasures.containsKey(what)) return 0;
+        return trouserMeasures.get(what);
     }
 
-    public double getMeasure(String what) {
-        if (!measures.containsKey(what)) return 0;
-        return measures.get(what);
+    public double getTopMeasure(String what) {
+        if (!topMeasures.containsKey(what)) return 0;
+        return topMeasures.get(what);
     }
 
     public String getUserStyle() {
@@ -165,6 +167,10 @@ public class Job implements Comparable<Job> {
     @Override
     public int compareTo(Job o) {
         return o.getDateArrived().compareTo(this.getDateArrived());
+    }
+
+    public HashMap<String, Double> getTrouserMeasurements() {
+        return trouserMeasures;
     }
 
     /**

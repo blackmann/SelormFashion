@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 import static co.blackground.selormfashion.Constants.PACKAGE_DIR;
 
@@ -55,6 +56,9 @@ public class HomeController {
 
     @FXML
     private GridPane gpMeasurements;
+
+    @FXML
+    private GridPane gpTrouserMeasurements;
 
     @FXML
     private Label lblCustomerMobile;
@@ -132,7 +136,10 @@ public class HomeController {
         MenuItem delivered = new MenuItem("Delivered");
         delivered.setOnAction((event) -> setDelivered(currentJob));
 
-        contextMenu.getItems().addAll(delivered);
+        MenuItem delete = new MenuItem("Delete");
+        delete.setOnAction((e) -> deleteJob());
+
+        contextMenu.getItems().addAll(delivered, delete);
         btnJobDone.setContextMenu(contextMenu);
     }
 
@@ -149,17 +156,40 @@ public class HomeController {
         lblCustomerMobile.setText(Utils.friendlyText(job.getCustomer().getMobile()));
         int column = 0;
         int row = 0;
-        for (Map.Entry<String, Double> entry : job.getMeasures().entrySet()) {
+        for (Map.Entry<String, Double> entry : job.getTopMeasures().entrySet()) {
+            double cValue = entry.getValue();
+            if (cValue == 0) continue;
             VBox vbMeasureItem = new VBox(4.0);
             Label lblTitle = new Label(Utils.toTitle(entry.getKey()));
             lblTitle.setFont(new Font(13));
 
-            Label lblValue = new Label(Double.toString(entry.getValue()));
+            Label lblValue = new Label(Double.toString(cValue));
             lblValue.setFont(new Font(24));
 
             vbMeasureItem.getChildren().addAll(lblTitle, lblValue);
 
             gpMeasurements.add(vbMeasureItem, column++, row);
+            if (column == 4) {
+                column = 0;
+                row++;
+            }
+        }
+
+        column = 0;
+        row = 0;
+        for (Map.Entry<String, Double> entry : job.getTrouserMeasurements().entrySet()) {
+            double cValue = entry.getValue();
+            if (cValue == 0) continue;
+            VBox vbMeasureItem = new VBox(4.0);
+            Label lblTitle = new Label(Utils.toTitle(entry.getKey()));
+            lblTitle.setFont(new Font(13));
+
+            Label lblValue = new Label(Double.toString(cValue));
+            lblValue.setFont(new Font(24));
+
+            vbMeasureItem.getChildren().addAll(lblTitle, lblValue);
+
+            gpTrouserMeasurements.add(vbMeasureItem, column++, row);
             if (column == 4) {
                 column = 0;
                 row++;
@@ -180,7 +210,7 @@ public class HomeController {
 
         lblCost.setText(Double.toString(job.getJobCost()));
         lblDeposit.setText(Double.toString(job.getDeposit()));
-        lblType.setText(job.getJobType());
+        // lblType.setText(job.getJobType());
 
         setBtnStateForDone(job);
     }
@@ -238,7 +268,7 @@ public class HomeController {
             }
 
             Label lblJobType = (Label) apJobItem.lookup("#jobType");
-            lblJobType.setText(j.getJobType());
+            // lblJobType.setText(j.getJobType());
 
             Label lblArrivalDate = (Label) apJobItem.lookup("#arrivalDate");
             lblArrivalDate.setText(Utils.formatDate(j.getDateArrived()));
@@ -287,7 +317,7 @@ public class HomeController {
         Stage primaryStage = mainApp.getPrimaryStage();
         newJobStage.initOwner(primaryStage);
         newJobStage.initModality(Modality.WINDOW_MODAL);
-
+        Utils.setIcon(newJobStage, mainApp);
         newJobStage.show();
     }
 
@@ -331,9 +361,17 @@ public class HomeController {
      */
     void savedNew() {
         newJobStage.close();
+        reloadJobs();
+    }
+
+    /**
+     * Reloads jobs from persistence
+     */
+    private void reloadJobs() {
         jobs = PersistenceManager.getInstance().getAllJobs();
         try {
             loadJobs();
+            selectFirstJob();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -418,13 +456,6 @@ public class HomeController {
         }
 
         boolean res = true;
-        if (selectedFilter == Job.Filter.TROUSERS) {
-            res = job.getJobType().equals(Job.Type.TROUSER);
-        }
-
-        if (selectedFilter == Job.Filter.TOPS) {
-            res = job.getJobType().equals(Job.Type.TOPS);
-        }
 
         if (selectedFilter == Job.Filter.TODAY) {
             date = new Date();
@@ -449,6 +480,7 @@ public class HomeController {
      * @param date2 second date to be compared with
      * @return Returns true if both dates are on the same day else false
      */
+    @SuppressWarnings("deprecation")
     private boolean isSameDate(Date date, Date date2) {
         return (date.getDate() == date2.getDate() && date.getMonth() == date2.getMonth()
                 && date.getYear() == date2.getYear());
@@ -538,5 +570,19 @@ public class HomeController {
     private void clearFilter() {
         date = null;
         cbFilter.setValue(Job.Filter.ALL);
+    }
+
+    private void deleteJob() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setContentText("Are you sure you want to delete this job?");
+        alert.setHeaderText("Sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            PersistenceManager.getInstance().deleteJob(currentJob);
+            reloadJobs();
+        }
+
     }
 }

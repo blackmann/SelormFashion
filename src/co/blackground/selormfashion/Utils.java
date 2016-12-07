@@ -1,6 +1,8 @@
 package co.blackground.selormfashion;
 
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -145,5 +147,9 @@ public class Utils {
         if (preference == null) {
             preference = Preferences.userNodeForPackage(Utils.class);
         }
+    }
+
+    public static void setIcon(Stage stage, Main main) {
+        stage.getIcons().add(new Image(main.getClass().getResource("views/resources/icon.png").toString()));
     }
 }

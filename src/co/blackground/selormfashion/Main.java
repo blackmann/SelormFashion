@@ -26,6 +26,7 @@ public class Main extends Application {
         primaryStage.setTitle(Constants.APP_NAME);
         primaryStage.setScene(new Scene(root));
         mainStage = primaryStage;
+        Utils.setIcon(mainStage, this);
         if (showLogInScreen()) {
             primaryStage.show();
         } else {
@@ -53,6 +54,7 @@ public class Main extends Application {
             loginStage.setResizable(false);
             controller.setStage(loginStage);
             loginStage.setTitle("Login");
+            Utils.setIcon(loginStage, this);
 
             loginStage.showAndWait();
         } catch (IOException e) {

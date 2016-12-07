@@ -95,4 +95,23 @@ public class PersistenceManager {
         Collections.sort(jobs);
         return jobs;
     }
+
+    /**
+     * Removes a job from persistence
+     *
+     * @param job the job to be removed from persistence
+     */
+    public void deleteJob(Job job) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(PersistenceManager.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jobs.remove(job);
+
+            marshaller.marshal(this, file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

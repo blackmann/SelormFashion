@@ -1,365 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jobs>
-    <job id="851d7dab-6a89-412d-bc70-add26ae0eb5b">
-        <measures>
+    <job id="c2a47841-d710-42b5-8bfa-cbb59d329357">
+        <topMeasures>
             <entry>
-                <key>thighs</key>
-                <value>25.0</value>
+                <key>chest</key>
+                <value>0.0</value>
             </entry>
             <entry>
-                <key>bass</key>
-                <value>62.0</value>
+                <key>sleeve_tbass</key>
+                <value>0.0</value>
             </entry>
             <entry>
-                <key>hips</key>
-                <value>66.0</value>
+                <key>sleeve_thighs</key>
+                <value>45.0</value>
             </entry>
             <entry>
-                <key>length</key>
-                <value>24.0</value>
-            </entry>
-            <entry>
-                <key>waist</key>
-                <value>23.0</value>
-            </entry>
-        </measures>
-        <customer id="8906d7e2-6261-4248-8fbe-dff7517fe5aa">
-            <name>Claudine</name>
-            <mobile>0541033922</mobile>
-        </customer>
-        <dateArrived>2016-12-02T15:40:55.868Z</dateArrived>
-        <jobCost>36.0</jobCost>
-        <deposit>79.0</deposit>
-        <done>false</done>
-        <jobType>TROUSER</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="13c1b1be-2486-4b56-b0e6-096e0abfa3b9">
-        <measures>
-            <entry>
-                <key>thighs</key>
-                <value>26.0</value>
-            </entry>
-            <entry>
-                <key>bass</key>
-                <value>19.0</value>
-            </entry>
-            <entry>
-                <key>hips</key>
-                <value>21.0</value>
+                <key>sleeve_bass</key>
+                <value>96.0</value>
             </entry>
             <entry>
                 <key>length</key>
-                <value>15.0</value>
+                <value>45.0</value>
             </entry>
             <entry>
-                <key>waist</key>
-                <value>40.0</value>
-            </entry>
-        </measures>
-        <customer id="407429d3-3e18-4622-ad7a-255104e0d403">
-            <name>Kwasi Fori</name>
-            <mobile>0267666557</mobile>
-        </customer>
-        <dateDelivered>2016-12-02T15:34:45.738Z</dateDelivered>
-        <dateArrived>2016-12-02T15:31:52.482Z</dateArrived>
-        <userStyle>styles\DSC_0279.JPG</userStyle>
-        <userPhoto>photos\IMG_20160425_110337.jpg</userPhoto>
-        <jobCost>110.0</jobCost>
-        <deposit>70.0</deposit>
-        <done>true</done>
-        <jobType>TROUSER</jobType>
-        <delivered>true</delivered>
-    </job>
-    <job id="e04de599-32ab-44d1-aa23-30a8a4d54ba3">
-        <measures>
-            <entry>
-                <key>thighs</key>
-                <value>1.0</value>
-            </entry>
-            <entry>
-                <key>bass</key>
-                <value>1.3</value>
-            </entry>
-            <entry>
-                <key>hips</key>
-                <value>66.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>11.0</value>
-            </entry>
-            <entry>
-                <key>waist</key>
+                <key>back</key>
                 <value>12.0</value>
             </entry>
-        </measures>
-        <customer id="cb5c5063-e226-4bcb-a65c-1305f5327485">
-            <name>Asempa</name>
-            <mobile></mobile>
-        </customer>
-        <dateArrived>2016-12-02T06:59:36.097Z</dateArrived>
-        <userPhoto>photos\IMG-20161128-WA0003.jpg</userPhoto>
-        <jobCost>12.0</jobCost>
-        <deposit>14.0</deposit>
-        <done>false</done>
-        <jobType>TROUSER</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="c372d0fe-a266-43c3-87ae-6f696d3924e0">
-        <measures>
-            <entry>
-                <key>chest</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>56.0</value>
-            </entry>
-            <entry>
-                <key>back</key>
-                <value>0.0</value>
-            </entry>
             <entry>
                 <key>stomach</key>
                 <value>0.0</value>
             </entry>
             <entry>
                 <key>sleeve_length</key>
-                <value>0.0</value>
+                <value>13.0</value>
             </entry>
             <entry>
                 <key>neck</key>
                 <value>0.0</value>
             </entry>
-        </measures>
-        <customer id="45674624-81ac-4d20-9b52-e36c9f901b9f">
-            <name>Selorm </name>
-            <mobile></mobile>
-        </customer>
-        <dateArrived>2016-11-30T18:03:08.536Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>false</done>
-        <jobType>TOPS</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="da6e861d-e1e2-4e18-80b7-cf8f7dac05bf">
-        <measures>
-            <entry>
-                <key>chest</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>back</key>
-                <value>90.0</value>
-            </entry>
-            <entry>
-                <key>stomach</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>neck</key>
-                <value>0.0</value>
-            </entry>
-        </measures>
-        <customer id="013c1762-074d-4db4-9444-2e6056147bca">
-            <name>June</name>
-            <mobile>123456</mobile>
-        </customer>
-        <dateArrived>2016-11-30T16:06:50.847Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>false</done>
-        <jobType>TOPS</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="918e369e-d1cf-4a80-b82e-3d47a879068f">
-        <measures>
-            <entry>
-                <key>chest</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>back</key>
-                <value>0.9</value>
-            </entry>
-            <entry>
-                <key>stomach</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>neck</key>
-                <value>0.0</value>
-            </entry>
-        </measures>
-        <customer id="e4a4c6b9-c931-4603-b8eb-549b537491ac">
-            <name>Abena Agyei</name>
-            <mobile></mobile>
-        </customer>
-        <dateArrived>2016-11-30T16:06:43.522Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>false</done>
-        <jobType>TOPS</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="f20eaed0-08b9-46c6-b982-d24d17744be6">
-        <measures>
-            <entry>
-                <key>chest</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>back</key>
-                <value>15.0</value>
-            </entry>
-            <entry>
-                <key>stomach</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>neck</key>
-                <value>0.0</value>
-            </entry>
-        </measures>
-        <customer id="afa35bf5-84e2-4e9e-85f2-ba05b0c5f0d9">
-            <name>Selorm</name>
-            <mobile></mobile>
-        </customer>
-        <dateDelivered>2016-11-30T17:34:33.748Z</dateDelivered>
-        <dateArrived>2016-11-30T16:06:43.515Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>true</done>
-        <jobType>TOPS</jobType>
-        <delivered>true</delivered>
-    </job>
-    <job id="34622886-6a32-4f6c-8d90-5611d17cc79e">
-        <measures>
-            <entry>
-                <key>chest</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>back</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>stomach</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>neck</key>
-                <value>0.0</value>
-            </entry>
-        </measures>
-        <customer id="79cb2abd-cc21-4545-9399-ec45b96ecdad">
-            <name></name>
-            <mobile></mobile>
-        </customer>
-        <dateDelivered>2016-11-30T17:32:07.331Z</dateDelivered>
-        <dateArrived>2016-11-30T16:06:43.502Z</dateArrived>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>true</done>
-        <jobType>TOPS</jobType>
-        <delivered>true</delivered>
-    </job>
-    <job id="b0ecde98-02d5-4df1-9674-3ec314cd81d5">
-        <measures>
+        </topMeasures>
+        <trouserMeasures>
             <entry>
                 <key>thighs</key>
                 <value>12.0</value>
@@ -370,78 +50,25 @@
             </entry>
             <entry>
                 <key>hips</key>
-                <value>11.0</value>
-            </entry>
-            <entry>
-                <key>length</key>
-                <value>36.0</value>
-            </entry>
-            <entry>
-                <key>waist</key>
-                <value>34.0</value>
-            </entry>
-        </measures>
-        <customer id="10c0b2f3-5a07-412d-9398-359bd7794c53">
-            <name>Airtel</name>
-            <mobile>0237666557</mobile>
-        </customer>
-        <dateArrived>2016-11-30T16:06:43.500Z</dateArrived>
-        <userStyle>styles\2.jpg</userStyle>
-        <userPhoto>photos\airtel-money.jpg</userPhoto>
-        <jobCost>0.0</jobCost>
-        <deposit>0.0</deposit>
-        <done>false</done>
-        <jobType>TROUSER</jobType>
-        <delivered>false</delivered>
-    </job>
-    <job id="3da2d424-0a1c-438c-8c9f-f0fbde1e53db">
-        <measures>
-            <entry>
-                <key>chest</key>
                 <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_tbass</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_thighs</key>
-                <value>12.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_bass</key>
-                <value>15.0</value>
             </entry>
             <entry>
                 <key>length</key>
                 <value>13.0</value>
             </entry>
             <entry>
-                <key>back</key>
-                <value>12.0</value>
-            </entry>
-            <entry>
-                <key>stomach</key>
-                <value>0.0</value>
-            </entry>
-            <entry>
-                <key>sleeve_length</key>
+                <key>waist</key>
                 <value>14.0</value>
             </entry>
-            <entry>
-                <key>neck</key>
-                <value>0.0</value>
-            </entry>
-        </measures>
-        <customer id="bad60b45-a88e-415d-b5eb-5173524aadd4">
-            <name>Fred</name>
-            <mobile>0302564222</mobile>
+        </trouserMeasures>
+        <customer id="92a6b2b7-2a85-4952-9738-00e6c4511cf2">
+            <name>Kwame Stan</name>
+            <mobile>1234569</mobile>
         </customer>
-        <dateArrived>2016-11-30T16:06:43.489Z</dateArrived>
+        <dateArrived>2016-12-07T14:23:22.705Z</dateArrived>
         <jobCost>0.0</jobCost>
         <deposit>0.0</deposit>
-        <done>true</done>
-        <jobType>TOPS</jobType>
+        <done>false</done>
         <delivered>false</delivered>
     </job>
 </jobs>

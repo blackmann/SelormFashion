@@ -5,8 +5,6 @@ import co.blackground.selormfashion.Utils;
 import co.blackground.selormfashion.extras.FormField;
 import co.blackground.selormfashion.models.Customer;
 import co.blackground.selormfashion.models.Job;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -40,6 +38,8 @@ public class NewJobController {
     private File userPhoto;
     private File userStyle;
 
+    private boolean firstRun = true;
+
     @FXML
     private ToggleButton btnTop;
 
@@ -68,6 +68,7 @@ public class NewJobController {
     private TextField tfAmount;
 
     private HomeController homeController;
+    private String selectedType;
 
     @FXML
     private void initialize() {
@@ -82,6 +83,7 @@ public class NewJobController {
         imgUser.setImage(new Image(getClass().getResource(PACKAGE_DIR + "views/resources/nobody_m.jpg").toString()));
         // TOP is the default type
         toggleToTop();
+        firstRun = false;
     }
 
     /**
@@ -89,7 +91,10 @@ public class NewJobController {
      */
     @FXML
     private void toggleToTop() {
-        activeJob.setJobType(TOPS);
+        if (!firstRun) {
+            setMeasuresToJob();
+        }
+        this.selectedType = TOPS;
         btnTop.setSelected(true);
         setUpForm();
     }
@@ -99,7 +104,10 @@ public class NewJobController {
      */
     @FXML
     private void toggleToTrouser() {
-        activeJob.setJobType(TROUSER);
+        if (!firstRun) {
+            setMeasuresToJob();
+        }
+        this.selectedType = TROUSER;
         btnTrouser.setSelected(true);
         setUpForm();
     }
@@ -108,7 +116,7 @@ public class NewJobController {
      * Switches between showing a TOPS form or a TROUSER form
      */
     private void setUpForm() {
-        switch (activeJob.getJobType()) {
+        switch (selectedType) {
             case TOPS:
                 setUpTopsForm();
                 break;
@@ -175,14 +183,7 @@ public class NewJobController {
         customer.setMobile(tfCustomerMobile.getText());
         customer.setName(tfCustomerName.getText());
 
-        ObservableList<Node> formNodes = gpForm.getChildren();
-        int i = 0;
-        int currentPosition = 0;
-        while (i < formNodes.size()) {
-            i++;
-            TextField tfField = (TextField) formNodes.get(i++);
-            activeJob.addMeasure(formFields.get(currentPosition++).getName(), toDouble(tfField.getText()));
-        }
+        setMeasuresToJob();
 
         if (userStyle != null) {
             File dest = new File(Constants.STYLES_DIR + userStyle.getName());
@@ -264,7 +265,10 @@ public class NewJobController {
      * @return the value of that field
      */
     private String fieldValue(String field) {
-        return string(activeJob.getMeasure(field));
+        if (selectedType.equals(TROUSER)) {
+            return string(activeJob.getTrouserMeasure(field));
+        }
+        return string(activeJob.getTopMeasure(field));
     }
 
     void setHomeController(HomeController stage) {
@@ -279,5 +283,30 @@ public class NewJobController {
     private double toDouble(String s) {
         if (s == null || s.isEmpty()) return 0;
         return Double.valueOf(s);
+    }
+
+    private void setMeasuresToJob() {
+        ObservableList<Node> formNodes = gpForm.getChildren();
+        int i = 0;
+        int currentPosition = 0;
+        while (i < formNodes.size()) {
+            i++;
+            TextField tfField = (TextField) formNodes.get(i++);
+            if (selectedType.equals(TOPS)) {
+                activeJob.addTopMeasure(formFields.get(currentPosition++).getName(), toDouble(tfField.getText()));
+            } else if (selectedType.equals(TROUSER)) {
+                activeJob.addTrouserMeasure(formFields.get(currentPosition++).getName(), toDouble(tfField.getText()));
+            }
+        }
+    }
+
+    public void setActiveJob(Job job) {
+        this.activeJob = job;
+        setUpTopsForm();
+        setPhotos();
+    }
+
+    private void setPhotos() {
+        // todo
     }
 }

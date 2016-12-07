@@ -9,7 +9,8 @@
             prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.60"
             fx:controller="co.blackground.selormfashion.controllers.HomeController">
     <center>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@styles/JMetroLightTheme.css">
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0"
+                    stylesheets="@styles/JMetroLightTheme.css">
             <children>
                 <SplitPane dividerPositions="0.3892733564013841" layoutX="145.0" layoutY="100.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <items>
@@ -66,14 +67,17 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="160.0" prefWidth="100.0" style="-fx-border-insets: 0  0 0 1; -fx-border-width: 1px; -fx-border-color: #d3d3d3;">
                             <children>
-                                <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox layoutX="52.0" layoutY="3.0" prefHeight="574.0" prefWidth="614.0"
+                                      AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0"
+                                      AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                                     <children>
                                         <VBox>
                                             <children>
                                                 <AnchorPane prefHeight="36.0" prefWidth="585.0">
                                                     <children>
                                           <Button fx:id="btnJobDone" layoutX="472.0" layoutY="7.0" mnemonicParsing="false" onAction="#toggleDone" prefHeight="31.0" prefWidth="98.0" text="Completed" />
-                                                        <Label fx:id="lblCustomerName" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                                        <Label fx:id="lblCustomerName" textFill="#0680d6"
+                                                               AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
                                                             <font>
                                                                 <Font size="24.0" />
                                                             </font>
@@ -122,76 +126,130 @@
                                                 <Insets left="5.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <Label text="Type:">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font name="System Bold" size="13.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lblType">
-                                             <HBox.margin>
-                                                <Insets left="4.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
                                        </children>
                                     </HBox>
                                             </children>
                                         </VBox>
-                                        <SplitPane dividerPositions="0.5041" prefHeight="264.0" prefWidth="609.0">
-                                            <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                                    VBox.vgrow="ALWAYS">
+                                            <content>
+                                                <AnchorPane prefWidth="588.0">
                                                     <children>
-                                                        <ImageView fx:id="ivCustomerPhoto" fitHeight="262.0" fitWidth="289.0" layoutX="55.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
+                                                        <SplitPane dividerPositions="0.5041" prefHeight="264.0"
+                                                                   prefWidth="609.0" AnchorPane.rightAnchor="0.0">
+                                                            <items>
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0"
+                                                                            prefHeight="160.0" prefWidth="100.0">
+                                                                    <children>
+                                                                        <ImageView fx:id="ivCustomerPhoto"
+                                                                                   fitHeight="262.0" fitWidth="289.0"
+                                                                                   layoutX="55.0" layoutY="67.0"
+                                                                                   pickOnBounds="true"
+                                                                                   preserveRatio="true"
+                                                                                   AnchorPane.bottomAnchor="0.0"
+                                                                                   AnchorPane.leftAnchor="0.0"
+                                                                                   AnchorPane.rightAnchor="1.0"
+                                                                                   AnchorPane.topAnchor="0.0"/>
+                                                                    </children>
+                                                                </AnchorPane>
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0"
+                                                                            prefHeight="160.0" prefWidth="273.0">
+                                                                    <children>
+                                                                        <ImageView fx:id="ivStyle" fitHeight="262.0"
+                                                                                   fitWidth="289.0" pickOnBounds="true"
+                                                                                   preserveRatio="true"/>
+                                                                    </children>
+                                                                </AnchorPane>
+                                                            </items>
+                                                            <opaqueInsets>
+                                                                <Insets/>
+                                                            </opaqueInsets>
+                                                        </SplitPane>
+                                                        <VBox layoutY="268.0" prefWidth="601.0"
+                                                              AnchorPane.leftAnchor="4.0">
+                                                            <children>
+                                                                <AnchorPane>
+                                                                    <children>
+                                                                        <Label text="MEASUREMENTS - TOP"
+                                                                               textFill="#0680d6">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                </AnchorPane>
+                                                                <GridPane fx:id="gpMeasurements" prefHeight="158.0"
+                                                                          prefWidth="601.0">
+                                                                    <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0"
+                                                                                        prefHeight="30.0"
+                                                                                        vgrow="SOMETIMES"/>
+                                                                        <RowConstraints minHeight="10.0"
+                                                                                        prefHeight="30.0"
+                                                                                        vgrow="SOMETIMES"/>
+                                                                    </rowConstraints>
+                                                                </GridPane>
+                                                                <AnchorPane>
+                                                                    <children>
+                                                                        <Label text="MEASUREMENTS - TROUSER"
+                                                                               textFill="#0680d6">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="13.0"/>
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                </AnchorPane>
+                                                                <GridPane fx:id="gpTrouserMeasurements"
+                                                                          prefHeight="190.0" prefWidth="561.0">
+                                                                    <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                        <ColumnConstraints hgrow="SOMETIMES"
+                                                                                           minWidth="10.0"
+                                                                                           prefWidth="100.0"/>
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0"
+                                                                                        prefHeight="30.0"
+                                                                                        vgrow="SOMETIMES"/>
+                                                                        <RowConstraints minHeight="10.0"
+                                                                                        prefHeight="30.0"
+                                                                                        vgrow="SOMETIMES"/>
+                                                                        <RowConstraints minHeight="10.0"
+                                                                                        prefHeight="30.0"
+                                                                                        vgrow="SOMETIMES"/>
+                                                                    </rowConstraints>
+                                                                </GridPane>
+                                                            </children>
+                                                        </VBox>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                    <children>
-                                                        <ImageView fx:id="ivStyle" fitHeight="262.0" fitWidth="289.0" pickOnBounds="true" preserveRatio="true" />
-                                                    </children>
-                                                </AnchorPane>
-                                            </items>
-                                            <opaqueInsets>
-                                                <Insets />
-                                            </opaqueInsets>
-                                            <VBox.margin>
-                                                <Insets right="8.0" top="8.0" />
-                                            </VBox.margin>
-                                        </SplitPane>
-                                        <Label text="MEASUREMENTS">
-                                            <VBox.margin>
-                                                <Insets left="16.0" top="4.0" />
-                                            </VBox.margin>
-                                            <font>
-                                                <Font name="System Bold" size="13.0" />
-                                            </font>
-                                        </Label>
-                                        <GridPane fx:id="gpMeasurements" VBox.vgrow="SOMETIMES">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                            <VBox.margin>
-                                                <Insets left="16.0" top="8.0" />
-                                            </VBox.margin>
-                                        </GridPane>
+                                            </content>
+                                        </ScrollPane>
                                     </children>
                                 </VBox>
                             </children>
-                            <padding>
-                                <Insets left="24.0" />
-                            </padding>
                         </AnchorPane>
                     </items>
                 </SplitPane>
